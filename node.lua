@@ -77,7 +77,7 @@ function Node()
       if children[i].tap(x, y) then return true end 
     end
 
-    local local_x, local_y = self.toWorld(x, y)
+    local local_x, local_y = self.fromWorld(x, y)
 
     if rect.inBounds(local_x, local_y) then
       if onTap ~= nil then
@@ -134,13 +134,11 @@ function Node()
     end
   end
 
-  -- Converting local coordinates to worldcoords, using inversed matrix
-  function self.toWorld(x, y)
+  function self.fromWorld(x, y)
     return global_transform:inverseTransformPoint(x, y)
   end
 
-  -- Converting world coordinates to local
-  function self.fromWorld(x, y)
+  function self.toWorld(x, y)
     return global_transform:transformPoint(x, y)
   end
 
