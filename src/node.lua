@@ -77,6 +77,9 @@ function Node()
   function self.onDraw()
   end
 
+  function self.update(dt)
+  end
+
   -- Processing tap event
   function self.tap(x, y)
     if not enabled then return false end
@@ -98,22 +101,52 @@ function Node()
     return false
   end
 
-  function self.addChild(node)
+  function self.addChild(node, pos)
     node.setParent(self)
-    table.insert(children, node)
+    index = pos or #children + 1
+    table.insert(children, index, node)
+    self.onChildAdd(index)
+  end
+
+  function self.addChildren(append_children)
+    for _, child in ipairs(append_children) do
+      self.addChild(child)
+    end
+  end
+
+  function self.onChildAdd(index)
   end
 
   function self.removeChild()
-    local removed_index = -1
+    local removing_index = nil
     for i, child in ipairs(children) do
       if child == self then
         child.setParent(nil)
-        removed_index = i
+        removing_index = i
         break
       end
     end
 
-    if removed_index >= 0 then table.remove(children, removed_index) end
+    if removing_index ~= nil then table.remove(children, removing_index) end
+    self.onChildRemove(removing_index)
+  end
+
+  function self.clearChildren()
+    for i, child in ipairs(children) do
+      child.setParent(nil)
+      children[i] = nil
+    end
+    self.onClearChildren()
+  end
+
+  function self.onChildRemove(index)
+  end
+
+  function self.onClearChildren()
+  end
+
+  function self.getChildren()
+    return children
   end
 
   -- Updating parent field,
@@ -121,8 +154,8 @@ function Node()
   function self.setParent(new_parent) 
     parent = new_parent
     self.updateTransform()
-    if not debug then
-      debug = parent.getDebug()
+    if not debug and parent.getDebug() then
+      self.setDebug(true)
     end
   end
 
@@ -232,8 +265,10 @@ function Node()
   function self.setDebug(on)
     debug = on or false
 
-    for _, child in ipairs(children) do
-      child.setDebug(debug)
+    if debug then
+      for _, child in ipairs(children) do
+        child.setDebug(debug)
+      end
     end
   end
 
