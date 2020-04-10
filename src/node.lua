@@ -1,4 +1,6 @@
-require 'rect'
+-- Getting folder that contains our src
+local family_path = (...):match("(.-)[^%/%.]+$")
+require(family_path..'rect')
 
 -- Creating a new drawable node with a bunch of base methods
 -- which allows to draw and update node, processing input events,

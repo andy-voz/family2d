@@ -1,4 +1,4 @@
-require 'node'
+require 'src/node'
 
 local root = nil
 
