@@ -12,19 +12,19 @@ function love.load()
   root.setRect(Rect(100, 100, 300, 300))
   root.setDebug(true)
 
-	callback = function(x, y)
+  callback = function(x, y)
     tapped_string = "root"                    
-	end
-	root.setOnTap(callback)
+  end
+  root.setOnTap(callback)
 
-	child1 = Node()
-	child1.setOnTap(function(x, y)
+  child1 = Node()
+  child1.setOnTap(function(x, y)
     tapped_string = "child 1"
-	end)
+  end)
   child1.setRect(Rect(20, 20, 30, 30))
-	root.addChild(child1)
+  root.addChild(child1)
 
-	child2 = ImageNode('res/image.png')
+  child2 = ImageNode('res/image.png')
   child2.setOnTap(function(x, y)
     tapped_string = "child 2"
   end)
@@ -46,14 +46,14 @@ end
 
 function love.draw()
   love.graphics.clear(1, 1, 1, 1)
-	love.graphics.push()
-	root.draw()
-	love.graphics.pop()
-	love.graphics.setColor(1, 0, 0, 1)
-	love.graphics.print("Tapped node: "..tapped_string)
+  love.graphics.push()
+  root.draw()
+  love.graphics.pop()
+  love.graphics.setColor(1, 0, 0, 1)
+  love.graphics.print("Tapped node: "..tapped_string)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-	tapped_string = ""
+  tapped_string = ""
   root.tap(x, y)
 end
