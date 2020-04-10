@@ -1,6 +1,6 @@
 -- Getting folder that contains our src
-local family_path = (...):match("(.-)[^%/%.]+$")
-require(family_path..'rect')
+local family_path = family_path or (...):match("(.-)[^%/%.]+$")
+require(family_path.."rect")
 
 -- Creating a new drawable node with a bunch of base methods
 -- which allows to draw and update node, processing input events,
@@ -59,6 +59,8 @@ function Node()
 
     love.graphics.replaceTransform(global_transform)
 
+    self.onDraw()
+
     if debug then
       local r, g, b, a = love.graphics.getColor()
       love.graphics.setColor(debugColor.r, debugColor.b, debugColor.g, 1)
@@ -69,6 +71,10 @@ function Node()
     for _, child in ipairs(children) do
       child.draw()
     end
+  end
+
+  -- Empty function for overriding in "subclasses"
+  function self.onDraw()
   end
 
   -- Processing tap event

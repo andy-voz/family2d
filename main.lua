@@ -1,4 +1,5 @@
 require 'src/node'
+require 'src/imagenode'
 
 local root = nil
 
@@ -23,16 +24,15 @@ function love.load()
     tapped_string = "child 1"
 	end)
   child1.setRect(Rect(20, 20, 30, 30))
-	child1.setRotation(-1.57)
-	child1.setOrigin(15, 15)
 	root.addChild(child1)
 
-	child2 = Node()
-	child2.setOnTap(function(x, y)
+	child2 = ImageNode('res/image.png')
+  child2.setOnTap(function(x, y)
     tapped_string = "child 2"
-	end)
-	child2.setRect(Rect(10, 10, 10, 20))
-	child1.addChild(child2)
+  end)
+  child2.load()
+  child2.setRect(Rect(50, 50, child2.getImageWidth(), child2.getImageHeight()))
+  root.addChild(child2)
 end
 
 function love.draw()
