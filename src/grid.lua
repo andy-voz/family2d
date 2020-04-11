@@ -2,7 +2,7 @@ local family_path = family_path or (...):match("(.-)[^%/%.]+$")
 require(family_path.."node")
 
 function Grid(rows, columns, margin_x, margin_y)
-  self = Node()
+  local self = Node()
  
   local rows = rows or 0
   local columns = columns or 0
@@ -12,15 +12,7 @@ function Grid(rows, columns, margin_x, margin_y)
 
   local space_x = 0
   local space_y = 0
-
-  function self.onChildAdd(index)
-    self.updateFromIndex(index)
-  end
-
-  function self.onChildRemove(index)
-    salf.updateFromIndex(index)
-  end
-
+  
   function self.updateFromIndex(index)
     local index = index or 0
 
@@ -39,6 +31,14 @@ function Grid(rows, columns, margin_x, margin_y)
       self.getChildren()[i].setRect(rect)
     end
   end 
+
+  function self.onChildAdd(index)
+    self.updateFromIndex(index)
+  end
+
+  function self.onChildRemove(index)
+    self.updateFromIndex(index)
+  end
 
   function self.calcSpaceX()
     space_x = (self.getRect().width - margin_x * (columns - 1)) / columns

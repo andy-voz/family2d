@@ -1,6 +1,7 @@
 -- Getting folder that contains our src
 local family_path = family_path or (...):match("(.-)[^%/%.]+$")
 require(family_path.."rect")
+require(family_path.."color")
 
 -- Creating a new drawable node with a bunch of base methods
 -- which allows to draw and update node, processing input events,
@@ -39,11 +40,9 @@ function Node()
   -- if true, will draw node's rect
   local debug = false
 
-  local debugColor = {
-    r = math.random(),
-    g = math.random(),
-    b = math.random()
-  }
+  local debug_color = ColorUtil.random()
+
+  local background_color = Color()
 
   -- array of inner nodes
   local children = {}
@@ -59,14 +58,18 @@ function Node()
 
     love.graphics.replaceTransform(global_transform)
 
+    local r, g, b, a = love.graphics.getColor()
+    love.graphics.setColor(background_color.r, background_color.b, background_color.g, background_color.a)
+    love.graphics.rectangle("fill", 0, 0, rect.width, rect.height)    
+
     self.onDraw()
 
     if debug then
-      local r, g, b, a = love.graphics.getColor()
-      love.graphics.setColor(debugColor.r, debugColor.b, debugColor.g, 1)
+      love.graphics.setColor(debug_color.r, debug_color.b, debug_color.g, 1)
       love.graphics.rectangle("line", 0, 0, rect.width, rect.height)
-      love.graphics.setColor(r, g, b, a)
     end
+    
+    love.graphics.setColor(r, g, b, a)
     
     for _, child in ipairs(children) do
       child.draw()
@@ -274,6 +277,14 @@ function Node()
 
   function self.getDebug()
     return debug
+  end
+
+  function self.setBackgroundColor(r, g, b, a)
+    background_color.set(r, g, b, a)
+  end
+
+  function self.getBackgroundColor()
+    return background_color
   end
 
   return self
