@@ -16,7 +16,7 @@ function love.load()
   root.setBackgroundColor(0.2, 0.2, 0.2, 1)
 
   local callback = function(x, y)
-    tapped_string = "root"                    
+    tapped_string = "root"
   end
   root.setOnTap(callback)
 
@@ -32,12 +32,15 @@ function love.load()
     tapped_string = "child 2"
   end)
   child2.load()
-  child2.setRect(50, 50, child2.getImageWidth(), child2.getImageHeight())
+  child2.setRect(75, 100, 50, 100)
   child2.setTintColor(0, 1, 1, 0.5)
+  child2.setMode("center_proportional")
+  child2.setRotation(1.2)
+  child2.setOrigin(25, 50)
   root.addChild(child2)
 
   local grid = Grid(3, 4, 10, 5)
-  grid.setRect(100, 20, 100, 100)
+  grid.setRect(200, 20, 100, 100)
   for i = 0, 11 do
     local grid_item = Node()
     grid_item.setOnTap(function(x, y)
