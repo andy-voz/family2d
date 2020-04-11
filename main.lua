@@ -9,7 +9,7 @@ local tapped_string = ""
 function love.load()
   root = Node()
 
-  root.setRect(Rect(100, 100, 300, 300))
+  root.setRect(100, 100, 300, 300)
   root.setDebug(true)
   root.setScale(1.5)
 
@@ -22,7 +22,7 @@ function love.load()
   child1.setOnTap(function(x, y)
     tapped_string = "child 1"
   end)
-  child1.setRect(Rect(20, 20, 30, 30))
+  child1.setRect(20, 20, 30, 30)
   root.addChild(child1)
 
   local child2 = ImageNode('res/image.png')
@@ -30,12 +30,12 @@ function love.load()
     tapped_string = "child 2"
   end)
   child2.load()
-  child2.setRect(Rect(50, 50, child2.getImageWidth(), child2.getImageHeight()))
+  child2.setRect(50, 50, child2.getImageWidth(), child2.getImageHeight())
   child2.setTintColor(0, 1, 1, 0.5)
   root.addChild(child2)
 
   local grid = Grid(3, 4, 10, 5)
-  grid.setRect(Rect(100, 20, 100, 100))
+  grid.setRect(100, 20, 100, 100)
   for i = 0, 11 do
     local grid_item = Node()
     grid_item.setOnTap(function(x, y)

@@ -192,14 +192,14 @@ function Node()
     return global_transform
   end
 
-  function self.setRect(new_rect)
-    rect = new_rect
+  function self.setRect(x, y, width, height)
+    rect.set(x, y, width, height)
 
     self.updateTransform()
   end
 
   function self.getRect()
-    return rect
+    return rect.copy()
   end
 
   function self.setScale(new_scale_x, new_scale_y)

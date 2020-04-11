@@ -22,13 +22,13 @@ function Grid(rows, columns, margin_x, margin_y)
       column = math.fmod(i, columns)
       if column == 0 then column = columns end
       column = column - 1
-      rect.x = column * (space_x + margin_x)
+      local x = column * (space_x + margin_x)
       
       row = math.floor((i - 1) / columns)
-      rect.y = row * (space_y + margin_y)
-      rect.width = space_x
-      rect.height = space_y
-      self.getChildren()[i].setRect(rect)
+      local y = row * (space_y + margin_y)
+      local width = space_x
+      local height = space_y
+      self.getChildren()[i].setRect(x, y, width, height)
     end
   end 
 
@@ -52,8 +52,8 @@ function Grid(rows, columns, margin_x, margin_y)
   self.calcSpaceY()
 
   super_setRect = self.setRect
-  function self.setRect(rect)
-    super_setRect(rect)
+  function self.setRect(x, y, width, height)
+    super_setRect(x, y, width, height)
 
     self.calcSpaceX()
     self.calcSpaceY()
