@@ -1,6 +1,7 @@
-require 'src/node'
-require 'src/imagenode'
-require 'src/grid'
+require "src/family"
+require(family_path.."nodes/node")
+require(family_path.."nodes/imagenode")
+require(family_path.."nodes/grid")
 
 local root = nil
 
@@ -12,6 +13,7 @@ function love.load()
   root.setRect(100, 100, 300, 300)
   root.setDebug(true)
   root.setScale(1.5)
+  root.setBackgroundColor(0.2, 0.2, 0.2, 1)
 
   local callback = function(x, y)
     tapped_string = "root"                    

@@ -1,5 +1,4 @@
-local family_path = family_path or (...):match("(.-)[^%/%.]+$")
-require(family_path.."node")
+require(family_path.."nodes/node")
 
 function Grid(rows, columns, margin_x, margin_y)
   local self = Node()

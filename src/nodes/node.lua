@@ -1,7 +1,5 @@
--- Getting folder that contains our src
-local family_path = family_path or (...):match("(.-)[^%/%.]+$")
-require(family_path.."rect")
-require(family_path.."color")
+require(family_path.."util/rect")
+require(family_path.."util/color")
 
 -- Creating a new drawable node with a bunch of base methods
 -- which allows to draw and update node, processing input events,

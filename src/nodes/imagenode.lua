@@ -1,6 +1,5 @@
-local family_path = family_path or (...):match("(.-)[^%/%.]+$")
-require(family_path.."node")
-require(family_path.."color")
+require(family_path.."nodes/node")
+require(family_path.."util/color")
 
 function ImageNode(path)
   local self = Node()
