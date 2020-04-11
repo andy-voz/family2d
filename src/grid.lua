@@ -32,12 +32,11 @@ function Grid(rows, columns, margin_x, margin_y)
       column = column - 1
       rect.x = column * (space_x + margin_x)
       
-      row = math.floor(i / rows)
+      row = math.floor((i - 1) / columns)
       rect.y = row * (space_y + margin_y)
       rect.width = space_x
       rect.height = space_y
       self.getChildren()[i].setRect(rect)
-      print(rect)
     end
   end 
 

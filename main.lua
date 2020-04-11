@@ -32,7 +32,7 @@ function love.load()
   child2.setRect(Rect(50, 50, child2.getImageWidth(), child2.getImageHeight()))
   root.addChild(child2)
 
-  child3 = Grid(4, 3, 10, 5)
+  child3 = Grid(3, 5, 10, 5)
   child3.setRect(Rect(100, 20, 100, 100))
   for i = 0, 11 do
     grid_item = Node()
