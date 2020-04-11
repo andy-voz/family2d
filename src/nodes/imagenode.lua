@@ -100,5 +100,14 @@ function ImageNode(path)
     return mode
   end
 
+  local super_setRect = self.setRect
+  function self.setRect(x, y, width, height)
+    super_setRect(x, y, width, height)
+
+    if image ~= nil then
+      mode_quad:set(ImageMode[mode](self.getRect(), image))
+    end
+  end
+
   return self
 end
