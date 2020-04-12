@@ -1,11 +1,7 @@
 require(FAMILY.."util.rect")
 require(FAMILY.."util.color")
+require(FAMILY.."input.controller")
 
--- Creating a new drawable node with a bunch of base methods
--- which allows to draw and update node, processing input events,
--- converting coordinates from local node coordinates to global world coords.
---
--- Each node can have an array of inner nodes.
 function Node()
   local self = {}
 
@@ -50,7 +46,7 @@ function Node()
   -- parent of current node
   local parent = nil
 
-  local onTap = nil
+  local controller = InputController()
 
   -- Drawing node if visible
   function self.draw()
@@ -84,22 +80,22 @@ function Node()
   function self.update(dt)
   end
 
-  -- Processing tap event
-  function self.tap(x, y)
+  --
+  function self.input(input_event)
     if not enabled then return false end
 
     for i = #children, 1, -1 do
-      if children[i].tap(x, y) then return true end
+      if children[i].input(input_event) then return true end
     end
 
-    local local_x, local_y = self.fromWorld(x, y)
+    local local_x, local_y = self.fromWorld(input_event.x, input_event.y)
 
     if rect.inBounds(local_x, local_y) then
-      if onTap ~= nil then
-        onTap(local_x, local_y)
-      end
+      local callback = controller[input_event.type]
 
-      return true
+      if callback ~= nil then
+        return callback(local_x, local_y, input_event)
+      end
     end
 
     return false
@@ -294,6 +290,26 @@ function Node()
 
   function self.setTintColor(r, g, b, a)
     tint_color.set(r, g, b, a)
+  end
+
+  function self.setController(new_controller)
+    controller = new_controller
+  end
+
+  function self.getController()
+    return controller
+  end
+
+  function self.setPressed(pressed)
+    controller.pressed = pressed
+  end
+
+  function self.setReleased(released)
+    controller.released = released
+  end
+
+  function self.setMoved(moved)
+    controller.moved = moved
   end
 
   return self

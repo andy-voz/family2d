@@ -3,6 +3,7 @@ require(FAMILY.."nodes.node")
 require(FAMILY.."nodes.image")
 require(FAMILY.."nodes.grid")
 require(FAMILY.."nodes.text")
+require(FAMILY.."input.event")
 
 local root = nil
 
@@ -16,21 +17,24 @@ function love.load()
   root.setScale(1.5)
   root.setBackgroundColor(0.2, 0.2, 0.2, 1)
 
-  local callback = function(x, y)
-    tapped_string = "root"
+  local callback = function(x, y, input_event)
+    tapped_string = input_event.type.." root"
+    return true
   end
-  root.setOnTap(callback)
+  root.setPressed(callback)
 
   local child1 = Node()
-  child1.setOnTap(function(x, y)
-    tapped_string = "child 1"
+  child1.setReleased(function(x, y, input_event)
+    tapped_string = input_event.type.." child 1"
+    return true
   end)
   child1.setRect(20, 20, 30, 30)
   root.addChild(child1)
 
   local child2 = Image('res/image.png')
-  child2.setOnTap(function(x, y)
-    tapped_string = "child 2"
+  child2.setPressed(function(x, y, input_event)
+    tapped_string = input_event.type.." child 2"
+    return true
   end)
   child2.load()
   child2.setRect(75, 100, 50, 100)
@@ -46,8 +50,9 @@ function love.load()
     local grid_item = Image("res/image.png")
     grid_item.load()
     grid_item.setMode("center_proportional")
-    grid_item.setOnTap(function(x, y)
-      tapped_string = "Grid item "..tostring(i)
+    grid_item.setMoved(function(x, y, input_event)
+      tapped_string = input_event.type.." Grid item "..tostring(i)
+      return true
     end)
     grid.addChild(grid_item)
   end
@@ -71,5 +76,25 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
   tapped_string = ""
-  root.tap(x, y)
+  root.input(MouseEvent("pressed", x, y, button, istouch, presses))
+end
+
+function love.mousereleased(x, y, button, istouch, presses)
+  root.input(MouseEvent("released", x, y, button, istouch, presses))
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+  root.input(MouseMoveEvent("moved", x, y, dx, dy, istouch))
+end
+
+function love.touchpressed(id, x, y, dx, dy, pressure)
+  root.input(TouchEvent("pressed", id, x, y, dx, dy, pressure))
+end
+
+function love.touchreleased(id, x, y, dx, dy, pressure)
+  root.input(TouchEvent("released", id, x, y, dx, dy, pressure))
+end
+
+function love.touchmoved( id, x, y, dx, dy, pressure )
+  root.input(TouchEvent("moved", id, x, y, dx, dy, pressure))
 end
