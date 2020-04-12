@@ -42,6 +42,8 @@ function Node()
 
   local background_color = Color()
 
+  local tint_color = Color(1, 1, 1, 1)
+
   -- array of inner nodes
   local children = {}
 
@@ -60,6 +62,7 @@ function Node()
     love.graphics.setColor(background_color.r, background_color.b, background_color.g, background_color.a)
     love.graphics.rectangle("fill", 0, 0, rect.width, rect.height)
 
+    love.graphics.setColor(tint_color.r, tint_color.g, tint_color.b, tint_color.a)
     self.onDraw()
 
     if debug then
@@ -283,6 +286,14 @@ function Node()
 
   function self.getBackgroundColor()
     return background_color
+  end
+
+  function self.getTintColor()
+    return tint_color
+  end
+
+  function self.setTintColor(r, g, b, a)
+    tint_color.set(r, g, b, a)
   end
 
   return self

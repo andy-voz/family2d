@@ -2,6 +2,7 @@ require "src.family"
 require(FAMILY.."nodes.node")
 require(FAMILY.."nodes.image")
 require(FAMILY.."nodes.grid")
+require(FAMILY.."nodes.text")
 
 local root = nil
 
@@ -52,6 +53,11 @@ function love.load()
   end
   grid.setBackgroundColor(0.5, 0.8, 0.1, 1)
   root.addChild(grid)
+
+  local text = Text("Brand New Scene Graph Library!\nWelcome to the family!!!")
+  text.setRect(50, 200, 200, 100)
+  text.setMode("center_proportional")
+  root.addChild(text)
 end
 
 function love.draw()
