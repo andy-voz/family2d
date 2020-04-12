@@ -1,5 +1,5 @@
-require(family_path.."util/rect")
-require(family_path.."util/color")
+require(FAMILY.."util.rect")
+require(FAMILY.."util.color")
 
 -- Creating a new drawable node with a bunch of base methods
 -- which allows to draw and update node, processing input events,

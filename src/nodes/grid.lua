@@ -1,8 +1,8 @@
-require(family_path.."nodes/node")
+require(FAMILY.."nodes.node")
 
 function Grid(rows, columns, margin_x, margin_y)
   local self = Node()
- 
+
   local rows = rows or 0
   local columns = columns or 0
 
@@ -11,25 +11,25 @@ function Grid(rows, columns, margin_x, margin_y)
 
   local space_x = 0
   local space_y = 0
-  
+
   function self.updateFromIndex(index)
     local index = index or 0
 
     for i = index, #self.getChildren() do
       rect = self.getChildren()[i].getRect()
-      
+
       column = math.fmod(i, columns)
       if column == 0 then column = columns end
       column = column - 1
       local x = column * (space_x + margin_x)
-      
+
       row = math.floor((i - 1) / columns)
       local y = row * (space_y + margin_y)
       local width = space_x
       local height = space_y
       self.getChildren()[i].setRect(x, y, width, height)
     end
-  end 
+  end
 
   function self.onChildAdd(index)
     self.updateFromIndex(index)
@@ -46,7 +46,7 @@ function Grid(rows, columns, margin_x, margin_y)
   function self.calcSpaceY()
     space_y = (self.getRect().height - margin_y * (rows - 1)) / rows
   end
-  
+
   self.calcSpaceX()
   self.calcSpaceY()
 

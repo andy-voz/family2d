@@ -1,5 +1,5 @@
-require(family_path.."nodes/node")
-require(family_path.."util/color")
+require(FAMILY.."nodes.node")
+require(FAMILY.."util.color")
 
 ImageMode = {
   normal = function()

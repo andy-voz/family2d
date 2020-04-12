@@ -1,7 +1,7 @@
-require "src/family"
-require(family_path.."nodes/node")
-require(family_path.."nodes/image")
-require(family_path.."nodes/grid")
+require "src.family"
+require(FAMILY.."nodes.node")
+require(FAMILY.."nodes.image")
+require(FAMILY.."nodes.grid")
 
 local root = nil
 
