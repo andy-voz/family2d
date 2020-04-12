@@ -38,7 +38,7 @@ ImageMode = {
   end
 }
 
-function ImageNode(path)
+function Image(path)
   local self = Node()
 
   local image = nil

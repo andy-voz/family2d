@@ -1,6 +1,6 @@
 require "src/family"
 require(family_path.."nodes/node")
-require(family_path.."nodes/imagenode")
+require(family_path.."nodes/image")
 require(family_path.."nodes/grid")
 
 local root = nil
@@ -27,7 +27,7 @@ function love.load()
   child1.setRect(20, 20, 30, 30)
   root.addChild(child1)
 
-  local child2 = ImageNode('res/image.png')
+  local child2 = Image('res/image.png')
   child2.setOnTap(function(x, y)
     tapped_string = "child 2"
   end)
@@ -42,7 +42,7 @@ function love.load()
   local grid = Grid(3, 4, 10, 5)
   grid.setRect(200, 20, 100, 100)
   for i = 0, 11 do
-    local grid_item = ImageNode("res/image.png")
+    local grid_item = Image("res/image.png")
     grid_item.load()
     grid_item.setMode("center_proportional")
     grid_item.setOnTap(function(x, y)
