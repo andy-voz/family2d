@@ -106,12 +106,14 @@ function Node()
     index = pos or #children + 1
     table.insert(children, index, node)
     self.onChildAdd(index)
+    return self
   end
 
   function self.addChildren(append_children)
     for _, child in ipairs(append_children) do
       self.addChild(child)
     end
+    return self
   end
 
   function self.onChildAdd(index)
@@ -129,6 +131,7 @@ function Node()
 
     if removing_index ~= nil then table.remove(children, removing_index) end
     self.onChildRemove(removing_index)
+    return self
   end
 
   function self.clearChildren()
@@ -137,6 +140,7 @@ function Node()
       children[i] = nil
     end
     self.onClearChildren()
+    return self
   end
 
   function self.onChildRemove(index)
@@ -157,6 +161,7 @@ function Node()
     if not debug and parent.getDebug() then
       self.setDebug(true)
     end
+    return self
   end
 
   function self.updateTransform()
@@ -193,6 +198,7 @@ function Node()
     rect.set(x, y, width, height)
 
     self.updateTransform()
+    return self
   end
 
   function self.getRect()
@@ -204,6 +210,7 @@ function Node()
     scale_y = new_scale_y or scale_x
 
     self.updateTransform()
+    return self
   end
 
   function self.getScale()
@@ -214,6 +221,7 @@ function Node()
     rotation = new_rotation or 0
 
     self.updateTransform()
+    return self
   end
 
   function self.getRotation()
@@ -225,6 +233,7 @@ function Node()
     origin_y = y or 0
 
     self.updateTransform()
+    return self
   end
 
   function self.getOrigin()
@@ -236,6 +245,7 @@ function Node()
     skew_y = y or 0
 
     self.updateTransform()
+    return self
   end
 
   function self.getSkew()
@@ -244,10 +254,12 @@ function Node()
 
   function self.setOnTap(onTapListener)
     onTap = onTapListener
+    return self
   end
 
   function self.setEnabled(on)
     self.enabled = on or true
+    return self
   end
 
   function self.getEnabled()
@@ -256,6 +268,7 @@ function Node()
 
   function self.setVisible(on)
     visible = on or true
+    return self
   end
 
   function self.getVisible()
@@ -270,6 +283,7 @@ function Node()
         child.setDebug(debug)
       end
     end
+    return self
   end
 
   function self.getDebug()
@@ -278,6 +292,7 @@ function Node()
 
   function self.setBackgroundColor(r, g, b, a)
     background_color.set(r, g, b, a)
+    return self
   end
 
   function self.getBackgroundColor()
@@ -290,10 +305,12 @@ function Node()
 
   function self.setTintColor(r, g, b, a)
     tint_color.set(r, g, b, a)
+    return self
   end
 
   function self.setController(new_controller)
     controller = new_controller
+    return self
   end
 
   function self.getController()
@@ -302,14 +319,17 @@ function Node()
 
   function self.setPressed(pressed)
     controller.pressed = pressed
+    return self
   end
 
   function self.setReleased(released)
     controller.released = released
+    return self
   end
 
   function self.setMoved(moved)
     controller.moved = moved
+    return self
   end
 
   return self

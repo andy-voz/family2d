@@ -12,10 +12,11 @@ local tapped_string = ""
 function love.load()
   root = Node()
 
-  root.setRect(100, 100, 300, 300)
-  root.setDebug(true)
-  root.setScale(1.5)
-  root.setBackgroundColor(0.2, 0.2, 0.2, 1)
+  root
+    .setRect(100, 100, 300, 300)
+    .setDebug(true)
+    .setScale(1.5)
+    .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
   local callback = function(x, y, input_event)
     tapped_string = input_event.type.." root"
@@ -24,45 +25,51 @@ function love.load()
   root.setPressed(callback)
 
   local child1 = Node()
-  child1.setReleased(function(x, y, input_event)
-    tapped_string = input_event.type.." child 1"
-    return true
-  end)
-  child1.setRect(20, 20, 30, 30)
+    .setReleased(function(x, y, input_event)
+      tapped_string = input_event.type.." child 1"
+      return true
+    end)
+    .setRect(20, 20, 30, 30)
+
   root.addChild(child1)
 
   local child2 = Image('res/image.png')
-  child2.setPressed(function(x, y, input_event)
-    tapped_string = input_event.type.." child 2"
-    return true
-  end)
+    .setPressed(function(x, y, input_event)
+      tapped_string = input_event.type.." child 2"
+      return true
+    end)
   child2.load()
-  child2.setRect(75, 100, 50, 100)
-  child2.setTintColor(0, 1, 1, 0.5)
-  child2.setMode("fill")
-  child2.setRotation(1.2)
-  child2.setOrigin(25, 50)
+  child2
+    .setRect(75, 100, 50, 100)
+    .setTintColor(0, 1, 1, 0.5)
+    .setMode("fill")
+    .setRotation(1.2)
+    .setOrigin(25, 50)
+
   root.addChild(child2)
 
   local grid = Grid(3, 4, 10, 5)
-  grid.setRect(200, 20, 100, 100)
+    .setRect(200, 20, 100, 100)
+
   for i = 0, 11 do
     local grid_item = Image("res/image.png")
     grid_item.load()
-    grid_item.setMode("center_proportional")
-    grid_item.setMoved(function(x, y, input_event)
-      tapped_string = input_event.type.." Grid item "..tostring(i)
-      return true
-    end)
+    grid_item
+      .setMode("center_proportional")
+      .setMoved(function(x, y, input_event)
+        tapped_string = input_event.type.." Grid item "..tostring(i)
+        return true
+      end)
     grid.addChild(grid_item)
   end
   grid.setBackgroundColor(0.5, 0.8, 0.1, 1)
   root.addChild(grid)
 
   local text = Text("Brand New Scene Graph Library!\nWelcome to the family!!!")
-  text.setRect(50, 200, 200, 100)
-  text.setMode("center_proportional")
-  root.addChild(text)
+    .setRect(50, 200, 200, 100)
+    .setMode("center_proportional")
+
+    root.addChild(text)
 end
 
 function love.draw()

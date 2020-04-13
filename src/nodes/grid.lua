@@ -56,11 +56,13 @@ function Grid(rows, columns, margin_x, margin_y)
 
     self.calcSpaceX()
     self.calcSpaceY()
+    return self
   end
 
   function self.setRows(new_rows)
     rows = new_rows
     self.calcSpaceY()
+    return self
   end
 
   function self.getRows()
@@ -70,6 +72,7 @@ function Grid(rows, columns, margin_x, margin_y)
   function self.setColumns(new_columns)
     columns = new_columns
     self.calcSpaceX()
+    return self
   end
 
   function self.getColumns()
@@ -79,6 +82,7 @@ function Grid(rows, columns, margin_x, margin_y)
   function self.setMarginX(new_margin)
     margin_x = new_margin
     self.calcSpaceX()
+    return self
   end
 
   function self.getMarginX()
@@ -88,6 +92,7 @@ function Grid(rows, columns, margin_x, margin_y)
   function self.setMarginY(new_margin)
     margin_y = new_margin
     self.calcSpaceY()
+    return self
   end
 
   function self.getMarginY()

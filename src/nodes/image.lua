@@ -31,6 +31,7 @@ function Image(path)
     if image ~= nil then
       mode_info.set(DrawMode[mode](self.getRect(), image))
     end
+    return self
   end
 
   function self.getMode()
@@ -44,6 +45,7 @@ function Image(path)
     if image ~= nil then
       mode_info.set(DrawMode[mode](self.getRect(), image))
     end
+    return self
   end
 
   return self
