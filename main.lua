@@ -69,7 +69,10 @@ function love.load()
     .setRect(50, 200, 200, 100)
     .setMode("center_proportional")
 
-    root.addChild(text)
+  root.addChild(text)
+
+  local grid2 = Grid(5, 5, 10, 10, 2, 2)
+  root.addChild(grid2)
 end
 
 function love.draw()

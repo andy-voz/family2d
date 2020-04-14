@@ -31,6 +31,11 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     end
   end
 
+  function self.update()
+    self.setRect(self.getRect().x, self.getRect().y, 0, 0)
+    self.updateFromIndex(0)
+  end
+
   function self.onChildAdd(index)
     self.updateFromIndex(index)
   end
@@ -46,11 +51,6 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     super_setRect(x, y, width, height)
 
     return self
-  end
-
-  function self.update()
-    self.setRect(self.getRect().x, self.getRect().y, 0, 0)
-    self.updateFromIndex(0)
   end
 
   function self.setRows(new_rows)
@@ -112,6 +112,8 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   function self.getCellY()
     return cell_y
   end
+
+  self.setRect(self.getRect().x, self.getRect().y, 0, 0)
 
   return self
 end
