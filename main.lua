@@ -14,8 +14,8 @@ function love.load()
 
   root
     .setRect(100, 100, 300, 300)
+    .setScale(1.7)
     .setDebug(true)
-    .setScale(1.5)
     .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
   local callback = function(x, y, input_event)
@@ -48,8 +48,8 @@ function love.load()
 
   root.addChild(child2)
 
-  local grid = Grid(3, 4, 10, 5)
-    .setRect(200, 20, 100, 100)
+  local grid = Grid(3, 4, 30, 15, 10, 5)
+    .setRect(150, 20, 100, 100)
 
   for i = 0, 11 do
     local grid_item = Image("res/image.png")

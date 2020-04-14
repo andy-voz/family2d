@@ -1,16 +1,16 @@
 require(FAMILY.."nodes.node")
 
-function Grid(rows, columns, margin_x, margin_y)
+function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local self = Node()
 
   local rows = rows or 0
   local columns = columns or 0
 
+  local cell_x = cell_x or 0
+  local cell_y = cell_y or 0
+
   local margin_x = margin_x or 0
   local margin_y = margin_y or 0
-
-  local space_x = 0
-  local space_y = 0
 
   function self.updateFromIndex(index)
     local index = index or 0
@@ -21,12 +21,12 @@ function Grid(rows, columns, margin_x, margin_y)
       column = math.fmod(i, columns)
       if column == 0 then column = columns end
       column = column - 1
-      local x = column * (space_x + margin_x)
+      local x = column * (cell_x + margin_x)
 
       row = math.floor((i - 1) / columns)
-      local y = row * (space_y + margin_y)
-      local width = space_x
-      local height = space_y
+      local y = row * (cell_y + margin_y)
+      local width = cell_x
+      local height = cell_y
       self.getChildren()[i].setRect(x, y, width, height)
     end
   end
@@ -39,29 +39,23 @@ function Grid(rows, columns, margin_x, margin_y)
     self.updateFromIndex(index)
   end
 
-  function self.calcSpaceX()
-    space_x = (self.getRect().width - margin_x * (columns - 1)) / columns
-  end
-
-  function self.calcSpaceY()
-    space_y = (self.getRect().height - margin_y * (rows - 1)) / rows
-  end
-
-  self.calcSpaceX()
-  self.calcSpaceY()
-
   super_setRect = self.setRect
   function self.setRect(x, y, width, height)
+    local width = cell_x * columns + margin_x * (columns - 1)
+    local height = cell_y * rows + margin_y * (rows - 1)
     super_setRect(x, y, width, height)
 
-    self.calcSpaceX()
-    self.calcSpaceY()
     return self
+  end
+
+  function self.update()
+    self.setRect(self.getRect().x, self.getRect().y, 0, 0)
+    self.updateFromIndex(0)
   end
 
   function self.setRows(new_rows)
     rows = new_rows
-    self.calcSpaceY()
+    self.update()
     return self
   end
 
@@ -71,7 +65,7 @@ function Grid(rows, columns, margin_x, margin_y)
 
   function self.setColumns(new_columns)
     columns = new_columns
-    self.calcSpaceX()
+    self.update()
     return self
   end
 
@@ -81,7 +75,7 @@ function Grid(rows, columns, margin_x, margin_y)
 
   function self.setMarginX(new_margin)
     margin_x = new_margin
-    self.calcSpaceX()
+    self.update()
     return self
   end
 
@@ -91,12 +85,32 @@ function Grid(rows, columns, margin_x, margin_y)
 
   function self.setMarginY(new_margin)
     margin_y = new_margin
-    self.calcSpaceY()
+    self.update()
     return self
   end
 
   function self.getMarginY()
     return margin_y
+  end
+
+  function self.setCellX(new_cell_x)
+    cell_x = new_cell_x
+    self.update()
+    return self
+  end
+
+  function self.getCellX()
+    return cell_x
+  end
+
+  function self.setCellY(new_cell_y)
+    cell_y = new_cell_y
+    self.update()
+    return self
+  end
+
+  function self.getCellY()
+    return cell_y
   end
 
   return self
