@@ -33,13 +33,13 @@ function love.load()
 
   root.addChild(child1)
 
-  local child2 = Image('res/image.png')
+  local image = love.graphics.newImage("res/image.png")
+  local child2 = Image()
+    .setImage(image)
     .setPressed(function(x, y, input_event)
       tapped_string = input_event.type.." child 2"
       return true
     end)
-  child2.load()
-  child2
     .setRect(75, 100, 50, 100)
     .setTintColor(0, 1, 1, 0.5)
     .setMode("fill")
@@ -52,9 +52,7 @@ function love.load()
     .setRect(150, 20, 100, 100)
 
   for i = 0, 11 do
-    local grid_item = Image("res/image.png")
-    grid_item.load()
-    grid_item
+    local grid_item = Image(image)
       .setMode("center_proportional")
       .setMoved(function(x, y, input_event)
         tapped_string = input_event.type.." Grid item "..tostring(i)

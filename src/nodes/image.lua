@@ -2,17 +2,14 @@ require(FAMILY.."nodes.node")
 require(FAMILY.."util.color")
 require(FAMILY.."util.drawmode")
 
-function Image(path)
+function Image(image)
   local self = Node()
-
-  local image = nil
 
   local mode = "normal"
 
   local mode_info = ModeInfo()
 
-  function self.load()
-    image = love.graphics.newImage(path)
+  if image ~= nil then
     mode_info.set(DrawMode[mode](self.getRect(), image))
   end
 
@@ -20,6 +17,14 @@ function Image(path)
     if image ~= nil then
       mode_info.draw(image)
     end
+  end
+
+  function self.setImage(new_image)
+    image = new_image
+    if image ~= nil then
+      mode_info.set(DrawMode[mode](self.getRect(), image))
+    end
+    return self
   end
 
   function self.getImage()
