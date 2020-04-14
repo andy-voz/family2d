@@ -7,7 +7,7 @@ function Rect(x, y, width, height)
   }
 
   function self.contains(x, y)
-    return x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height 
+    return x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height
   end
 
   function self.set(x, y, width, height)
@@ -25,8 +25,12 @@ function Rect(x, y, width, height)
     return x >= 0 and x <= self.width and y >= 0 and y <= self.height
   end
 
+  function self.center()
+    return self.x + self.width / 2, self.y + self.height / 2
+  end
+
   mt = {}
-  
+
   function mt.__tostring()
     return "X: "..tostring(self.x).." Y: "..tostring(self.y).." Width: "..tostring(self.width).." Height: "..tostring(self.height)
   end
