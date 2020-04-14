@@ -168,7 +168,7 @@ function Node()
     local_transform:setTransformation(rect.x, rect.y, rotation, scale_x, scale_y, origin_x, origin_y, skew_x, skew_y)
     self.updateGlobalTransform()
     for _, child in ipairs(children) do
-      child.updateGlobalTransform()
+      child.updateTransform()
     end
   end
 
@@ -330,6 +330,14 @@ function Node()
   function self.setMoved(moved)
     controller.moved = moved
     return self
+  end
+
+  function self.getGlobalTransform()
+    return global_transform
+  end
+
+  function self.getLocalTransform()
+    return local_transform
   end
 
   return self

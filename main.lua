@@ -24,53 +24,22 @@ function love.load()
   end
   root.setPressed(callback)
 
-  local child1 = Node()
-    .setReleased(function(x, y, input_event)
-      tapped_string = input_event.type.." child 1"
-      return true
-    end)
-    .setRect(20, 20, 30, 30)
-
-  root.addChild(child1)
-
   local image = love.graphics.newImage("res/image.png")
-  local child2 = Image()
-    .setImage(image)
-    .setPressed(function(x, y, input_event)
-      tapped_string = input_event.type.." child 2"
-      return true
-    end)
-    .setRect(75, 100, 50, 100)
-    .setTintColor(0, 1, 1, 0.5)
-    .setMode("fill")
-    .setRotation(1.2)
-    .setOrigin(25, 50)
 
-  root.addChild(child2)
-
-  local grid = Grid(3, 4, 30, 15, 10, 5)
-    .setRect(150, 20, 100, 100)
-
-  for i = 0, 11 do
-    local grid_item = Image(image)
+  local grid = Grid(5, 5, 50, 30, 2, 2)
+    .setRect(10, 50, 0, 0)
+  for i = 0, 24 do
+    local node1 = Node()
+    local node2 = Image(image)
+      .setRect(25, 15, 40, 20)
+      .setOrigin(20, 10)
       .setMode("center_proportional")
-      .setMoved(function(x, y, input_event)
-        tapped_string = input_event.type.." Grid item "..tostring(i)
-        return true
-      end)
-    grid.addChild(grid_item)
+
+    node1.addChild(node2)
+    grid.addChild(node1)
   end
-  grid.setBackgroundColor(0.5, 0.8, 0.1, 1)
+
   root.addChild(grid)
-
-  local text = Text("Brand New Scene Graph Library!\nWelcome to the family!!!")
-    .setRect(50, 200, 200, 100)
-    .setMode("center_proportional")
-
-  root.addChild(text)
-
-  local grid2 = Grid(5, 5, 10, 10, 2, 2)
-  root.addChild(grid2)
 end
 
 function love.draw()
@@ -79,7 +48,7 @@ function love.draw()
   root.draw()
   love.graphics.pop()
   love.graphics.setColor(1, 0, 0, 1)
-  love.graphics.print("Tapped node: "..tapped_string)
+  love.graphics.print(tapped_string)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)

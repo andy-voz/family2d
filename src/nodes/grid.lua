@@ -16,8 +16,6 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     local index = index or 0
 
     for i = index, #self.getChildren() do
-      rect = self.getChildren()[i].getRect()
-
       column = math.fmod(i, columns)
       if column == 0 then column = columns end
       column = column - 1
@@ -44,7 +42,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     self.updateFromIndex(index)
   end
 
-  super_setRect = self.setRect
+  local super_setRect = self.setRect
   function self.setRect(x, y, width, height)
     local width = cell_x * columns + margin_x * (columns - 1)
     local height = cell_y * rows + margin_y * (rows - 1)
