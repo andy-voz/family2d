@@ -258,7 +258,7 @@ function Node()
   end
 
   function self.setEnabled(on)
-    self.enabled = on or true
+    self.enabled = on
     return self
   end
 
@@ -267,7 +267,7 @@ function Node()
   end
 
   function self.setVisible(on)
-    visible = on or true
+    visible = on
     return self
   end
 
@@ -276,7 +276,7 @@ function Node()
   end
 
   function self.setDebug(on)
-    debug = on or false
+    debug = on
 
     if debug then
       for _, child in ipairs(children) do
