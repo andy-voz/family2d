@@ -82,7 +82,7 @@ function Node()
 
   --
   function self.input(input_event)
-    if not enabled then return false end
+    if not enabled or not visible then return false end
 
     for i = #children, 1, -1 do
       if children[i].input(input_event) then return true end
