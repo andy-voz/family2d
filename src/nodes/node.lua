@@ -82,23 +82,23 @@ function Node()
 
   --
   function self.input(input_event)
-    if not enabled or not visible then return false end
+    if not enabled or not visible then return nil end
 
     for i = #children, 1, -1 do
-      if children[i].input(input_event) then return true end
+      local processed = children[i].input(input_event)
+      if processed ~= nil then return processed end
     end
 
     local local_x, local_y = self.fromWorld(input_event.x, input_event.y)
+    if not rect.inBounds(local_x, local_y) then return nil end
 
-    if rect.inBounds(local_x, local_y) then
-      local callback = controller[input_event.type]
+    local callback = controller[input_event.type]
 
-      if callback ~= nil then
-        return callback(local_x, local_y, input_event)
-      end
+    if callback ~= nil then
+      if callback(input_event) then return self end
     end
 
-    return false
+    return nil
   end
 
   function self.addChild(node, pos)
@@ -258,7 +258,7 @@ function Node()
   end
 
   function self.setEnabled(on)
-    self.enabled = on
+    enabled = on
     return self
   end
 
@@ -329,6 +329,26 @@ function Node()
 
   function self.setMoved(moved)
     controller.moved = moved
+    return self
+  end
+
+  function self.setKeyPressed(key_pressed)
+    controller.key_pressed = key_pressed
+    return self
+  end
+
+  function self.setKeyReleased(key_released)
+    controller.key_released = key_released
+    return self
+  end
+
+  function self.setTextInput(text_input)
+    controller.text_input = text_input
+    return self
+  end
+
+  function self.setProcessed(processed)
+    controller.processed = processed
     return self
   end
 

@@ -39,6 +39,7 @@ function TouchEvent(type, id, x, y, dx, dy, pressure)
   self.dx = dx
   self.dy = dy
   self.pressure = pressure
+  self.isTouch = true
 
   return self
 end

@@ -10,7 +10,9 @@ function Text(text, font)
 
   local mode_info = ModeInfo()
 
-  local text = love.graphics.newText(font, text or "")
+  local text_string = text or ""
+
+  local text = love.graphics.newText(font, text_string)
 
   function self.onDraw()
     mode_info.draw(text)
@@ -25,13 +27,14 @@ function Text(text, font)
   end
 
   function self.setText(new_text)
-    text:set(new_text)
+    text_string = new_text
+    text:set(text_string)
     mode_info.set(DrawMode[mode](self.getRect(), text))
     return self
   end
 
   function self.getText()
-    return text
+    return text_string
   end
 
   function self.setFont(new_font)

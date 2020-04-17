@@ -3,13 +3,17 @@ require(FAMILY.."nodes.node")
 require(FAMILY.."nodes.image")
 require(FAMILY.."nodes.grid")
 require(FAMILY.."nodes.text")
+require(FAMILY.."nodes.input")
 require(FAMILY.."input.event")
+require(FAMILY.."input.keyboard")
+require(FAMILY.."input.processed")
 
 local root = nil
 
 local tapped_string = ""
 
 function love.load()
+  love.keyboard.setKeyRepeat(true)
   root = Node()
 
   root
@@ -18,7 +22,7 @@ function love.load()
     .setDebug(true)
     .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
-  local callback = function(x, y, input_event)
+  local callback = function(input_event)
     tapped_string = input_event.type.." root"
     return true
   end
@@ -40,6 +44,27 @@ function love.load()
   end
 
   root.addChild(grid)
+
+  local input = Input("Input Box")
+    .setRect(10, 10, 200, 20)
+    .setBackgroundColor(0.8, 0.2, 0.2, 1)
+    .setMode("center")
+    .setMax(20)
+
+  input.setOnFocus(function()
+    input.setBackgroundColor(0.1, 0.2, 0.2, 1)
+  end)
+
+  input.setOnFocusLost(function()
+    input.setBackgroundColor(0.8, 0.2, 0.2, 1)
+  end)
+
+  input.setOnConfirm(function()
+    input.setFocused(false)
+    print(input.getText())
+  end)
+
+  root.addChild(input)
 end
 
 function love.draw()
@@ -53,25 +78,49 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
   tapped_string = ""
-  root.input(MouseEvent("pressed", x, y, button, istouch, presses))
+  local event = MouseEvent("pressed", x, y, button, istouch, presses)
+  local processed = root.input(event)
+  ProcessedController.processed(processed, event)
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
-  root.input(MouseEvent("released", x, y, button, istouch, presses))
+  local event = MouseEvent("released", x, y, button, istouch, presses)
+  local processed = root.input(event)
+  ProcessedController.processed(processed, event)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
-  root.input(MouseMoveEvent("moved", x, y, dx, dy, istouch))
+  local event = MouseMoveEvent("moved", x, y, dx, dy, istouch)
+  local processed = root.input(event)
+  ProcessedController.processed(processed, event)
 end
 
 function love.touchpressed(id, x, y, dx, dy, pressure)
-  root.input(TouchEvent("pressed", id, x, y, dx, dy, pressure))
+  local event = TouchEvent("pressed", id, x, y, dx, dy, pressure)
+  local processed = root.input(event)
+  ProcessedController.processed(processed)
 end
 
 function love.touchreleased(id, x, y, dx, dy, pressure)
-  root.input(TouchEvent("released", id, x, y, dx, dy, pressure))
+  local event = TouchEvent("released", id, x, y, dx, dy, pressure)
+  local processed = root.input(event)
+  ProcessedController.processed(processed)
 end
 
-function love.touchmoved( id, x, y, dx, dy, pressure )
-  root.input(TouchEvent("moved", id, x, y, dx, dy, pressure))
+function love.touchmoved(id, x, y, dx, dy, pressure)
+  local event = TouchEvent("moved", id, x, y, dx, dy, pressure)
+  local processed = root.input(event)
+  ProcessedController.processed(processed)
+end
+
+function love.keypressed(key, scancode, isRepeat)
+  KeyboardController.keyPressed(key, scancode, isRepeat)
+end
+
+function love.keyreleased(key, scancode)
+  KeyboardController.keyReleased(key, scancode)
+end
+
+function love.textinput(text)
+  KeyboardController.textInput(text)
 end
