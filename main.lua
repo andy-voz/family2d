@@ -1,12 +1,5 @@
 require "src.family"
-require(FAMILY.."nodes.node")
-require(FAMILY.."nodes.image")
-require(FAMILY.."nodes.grid")
-require(FAMILY.."nodes.text")
-require(FAMILY.."nodes.input")
-require(FAMILY.."input.event")
-require(FAMILY.."input.keyboard")
-require(FAMILY.."input.processed")
+require_family()
 
 local root = nil
 
@@ -48,7 +41,7 @@ function love.load()
   local input = Input("Input Box")
     .setRect(10, 10, 200, 20)
     .setBackgroundColor(0.8, 0.2, 0.2, 1)
-    .setMode("center")
+    .setMode("proportional")
     .setMax(20)
 
   input.setOnFocus(function()
