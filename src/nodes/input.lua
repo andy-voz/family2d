@@ -66,8 +66,10 @@ function Input(text, font)
     focused = new_focused
     if focused then
       if on_focus ~= nil then on_focus() end
+      love.keyboard.setTextInput(true)
     elseif on_focus_lost ~= nil then
       on_focus_lost()
+      love.keyboard.setTextInput(false)
     end
 
     return self

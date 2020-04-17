@@ -95,23 +95,23 @@ function love.mousemoved(x, y, dx, dy, istouch)
   ProcessedController.processed(processed, event)
 end
 
-function love.touchpressed(id, x, y, dx, dy, pressure)
+--[[function love.touchpressed(id, x, y, dx, dy, pressure)
   local event = TouchEvent("pressed", id, x, y, dx, dy, pressure)
   local processed = root.input(event)
-  ProcessedController.processed(processed)
+  ProcessedController.processed(processed, event)
 end
 
 function love.touchreleased(id, x, y, dx, dy, pressure)
   local event = TouchEvent("released", id, x, y, dx, dy, pressure)
   local processed = root.input(event)
-  ProcessedController.processed(processed)
+  ProcessedController.processed(processed, event)
 end
 
 function love.touchmoved(id, x, y, dx, dy, pressure)
   local event = TouchEvent("moved", id, x, y, dx, dy, pressure)
   local processed = root.input(event)
-  ProcessedController.processed(processed)
-end
+  ProcessedController.processed(processed, event)
+end]]--
 
 function love.keypressed(key, scancode, isRepeat)
   KeyboardController.keyPressed(key, scancode, isRepeat)
