@@ -10,10 +10,10 @@ function love.load()
   root = Node()
 
   root
-    .setRect(100, 100, 300, 300)
+    .setRect(50, 50, 250, 250)
     .setScale(2)
     .setDebug(true)
-    .setBackgroundColor(0.2, 0.2, 0.2, 1)
+    .setBackgroundColor("#B0D7FFFF")
 
   local callback = function(input_event)
     tapped_string = input_event.type.." root"
@@ -22,38 +22,48 @@ function love.load()
   root.setPressed(callback)
 
   local image = love.graphics.newImage("res/image.png")
+  local font = love.graphics.newFont("res/font.ttf", 50)
 
   local list = List()
-    .setRect(10, 50, 100, 200)
+    .setRect(10, 50, 100, 150)
+    .setBackgroundColor("#AA95E8FF")
 
   for i = 0, 10 do
     local node1 = Node()
       .setRect(0, 0, 100, 30)
 
     local node2 = Image(image)
-      .setRect(5, 5, 90, 20)
+      .setRect(75, 5, 20, 20)
       .setMode("ending", "center", "proportional")
 
     node1.addChild(node2)
+
+    local node3 = Text("List entry", font)
+      .setRect(10, 5, 60, 20)
+      .setVirtualHeight(12)
+      .setTintColor(0, 0, 0, 1)
+      .setMode("center", "center")
+
+    node1.addChild(node3)
     list.addChild(node1)
   end
 
   root.addChild(list)
 
-  local font = love.graphics.newFont("res/font.ttf", 50)
   local input = Input("Input Box", font)
     .setRect(10, 10, 100, 20)
-    .setBackgroundColor(0.8, 0.2, 0.2, 1)
+    .setBackgroundColor("#95E8D1FF")
+    .setTintColor(0, 0, 0, 1)
     .setMax(60)
     .setMode("start", "ending", "none", true)
     .setVirtualHeight(12)
 
   input.setOnFocus(function()
-    input.setBackgroundColor(0.1, 0.2, 0.2, 1)
+    input.setBackgroundColor("#9CFF92FF")
   end)
 
   input.setOnFocusLost(function()
-    input.setBackgroundColor(0.8, 0.2, 0.2, 1)
+    input.setBackgroundColor("#95E8D1FF")
   end)
 
   input.setOnConfirm(function()

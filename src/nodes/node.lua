@@ -63,7 +63,7 @@ function Node()
     end
 
     local r, g, b, a = love.graphics.getColor()
-    love.graphics.setColor(background_color.r, background_color.b, background_color.g, background_color.a)
+    love.graphics.setColor(background_color.r, background_color.g, background_color.b, background_color.a)
     love.graphics.rectangle("fill", 0, 0, rect.width, rect.height)
 
     love.graphics.setColor(tint_color.r, tint_color.g, tint_color.b, tint_color.a)
