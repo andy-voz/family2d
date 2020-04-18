@@ -6,11 +6,22 @@ function Text(text, font)
 
   local font = font or love.graphics.newFont()
 
-  local mode_info = ModeInfo()
-
   local text_string = text or ""
 
   local text = love.graphics.newText(font, text_string)
+
+  local virtual_height = text:getFont():getHeight()
+
+  local mode_info = ModeInfo()
+  local super_calcScale = mode_info.calcScale
+  function mode_info.calcScale(rect, drawable)
+    if virtual_height == text:getFont():getHeight() then
+      return super_calcScale(rect, drawable)
+    else
+      scale = virtual_height / text:getFont():getHeight()
+      return scale, scale
+    end
+  end
 
   mode_info.calculate(self.getRect(), text)
 
@@ -56,6 +67,16 @@ function Text(text, font)
 
   function self.getMode()
     return mode_info
+  end
+
+  function self.setVirtualHeight(new_height)
+    virtual_height = new_height
+    mode_info.calculate(self.getRect(), text)
+    return self
+  end
+
+  function self.getVirtualHeight()
+    return self
   end
 
   return self

@@ -41,9 +41,12 @@ function ModeInfo(rect, drawable, mode_x, mode_y, scale, scroll_x, scroll_y)
     self.scroll_y = scroll_y or false
   end
 
-  function self.calculate(rect, drawable)
-    self.scale_x, self.scale_y = DrawMode[self.scale](rect, drawable)
+  function self.calcScale(rect, drawable)
+     return DrawMode[self.scale](rect, drawable)
+  end
 
+  function self.calculate(rect, drawable)
+    self.scale_x, self.scale_y = self.calcScale(rect, drawable)
     self.x = DrawMode[self.mode_x](rect.width, drawable:getWidth() * self.scale_x)
     if self.scroll_x then
       local dx = rect.width - drawable:getWidth() * self.scale_x

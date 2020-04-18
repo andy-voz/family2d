@@ -11,7 +11,7 @@ function love.load()
 
   root
     .setRect(100, 100, 300, 300)
-    .setScale(1.5)
+    .setScale(3)
     .setDebug(true)
     .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
@@ -38,10 +38,13 @@ function love.load()
 
   root.addChild(grid)
 
-  local input = Input("Input Box")
-    .setRect(10, 10, 200, 20)
+  local font = love.graphics.newFont("res/font.ttf", 50)
+  local input = Input("Input Box", font)
+    .setRect(10, 10, 100, 20)
     .setBackgroundColor(0.8, 0.2, 0.2, 1)
     .setMax(60)
+    .setMode("start", "ending", "none", true)
+    .setVirtualHeight(12)
 
   input.setOnFocus(function()
     input.setBackgroundColor(0.1, 0.2, 0.2, 1)
