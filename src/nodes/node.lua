@@ -87,6 +87,9 @@ function Node()
   end
 
   function self.update(dt)
+    for _, child in ipairs(children) do
+      child.update(dt)
+    end
   end
 
   --

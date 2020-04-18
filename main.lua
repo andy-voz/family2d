@@ -11,7 +11,7 @@ function love.load()
 
   root
     .setRect(100, 100, 300, 300)
-    .setScale(3)
+    .setScale(2)
     .setDebug(true)
     .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
@@ -23,20 +23,21 @@ function love.load()
 
   local image = love.graphics.newImage("res/image.png")
 
-  local grid = Grid(5, 5, 50, 30, 2, 2)
-    .setRect(10, 50, 0, 0)
-  for i = 0, 24 do
+  local list = List()
+    .setRect(10, 50, 100, 200)
+  for i = 0, 10 do
     local node1 = Node()
+      .setRect(0, 0, 100, 30)
+
     local node2 = Image(image)
-      .setRect(25, 15, 40, 20)
-      .setOrigin(20, 10)
+      .setRect(5, 5, 90, 20)
       .setMode("ending", "center", "proportional")
 
     node1.addChild(node2)
-    grid.addChild(node1)
+    list.addChild(node1)
   end
 
-  root.addChild(grid)
+  root.addChild(list)
 
   local font = love.graphics.newFont("res/font.ttf", 50)
   local input = Input("Input Box", font)
@@ -69,6 +70,10 @@ function love.draw()
   love.graphics.pop()
   love.graphics.setColor(1, 0, 0, 1)
   love.graphics.print(tapped_string)
+end
+
+function love.update(dt)
+  root.update(dt)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
