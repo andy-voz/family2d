@@ -6,13 +6,13 @@ function Text(text, font)
 
   local font = font or love.graphics.newFont()
 
-  local mode = "normal"
-
   local mode_info = ModeInfo()
 
   local text_string = text or ""
 
   local text = love.graphics.newText(font, text_string)
+
+  mode_info.calculate(self.getRect(), text)
 
   function self.onDraw()
     mode_info.draw(text)
@@ -22,14 +22,14 @@ function Text(text, font)
   function self.setRect(x, y, width, height)
     super_setRect(x, y, width, height)
 
-    mode_info.set(DrawMode[mode](self.getRect(), text))
+    mode_info.calculate(self.getRect(), text)
     return self
   end
 
   function self.setText(new_text)
     text_string = new_text
     text:set(text_string)
-    mode_info.set(DrawMode[mode](self.getRect(), text))
+    mode_info.calculate(self.getRect(), text)
     return self
   end
 
@@ -39,7 +39,8 @@ function Text(text, font)
 
   function self.setFont(new_font)
     font = new_font
-    mode_info.set(DrawMode[mode](self.getRect(), text))
+    text:setFont(font)
+    mode_info.calulate(self.getRect(), text)
     return self
   end
 
@@ -47,14 +48,14 @@ function Text(text, font)
     return font
   end
 
-  function self.setMode(new_mode)
-    mode = new_mode
-    mode_info.set(DrawMode[mode](self.getRect(), text))
+  function self.setMode(mode_x, mode_y, scale, scroll_x, scroll_y)
+    mode_info.set(mode_x, mode_y, scale, scroll_x, scroll_y)
+    mode_info.calculate(self.getRect(), text)
     return self
   end
 
   function self.getMode()
-    return mode
+    return mode_info
   end
 
   return self

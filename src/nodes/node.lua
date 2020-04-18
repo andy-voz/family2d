@@ -9,6 +9,7 @@ function Node()
   local global_transform = love.math.newTransform()
 
   local rect = Rect()
+  local world_rect = Rect()
 
   -- scale factor of the node
   local scale_x = 1
@@ -34,6 +35,8 @@ function Node()
   -- if true, will draw node's rect
   local debug = false
 
+  local scissor = false
+
   local debug_color = ColorUtil.random()
 
   local background_color = Color()
@@ -54,6 +57,11 @@ function Node()
 
     love.graphics.replaceTransform(global_transform)
 
+    local s_x, s_y, s_w, s_h = love.graphics.getScissor()
+    if scissor then
+      love.graphics.setScissor(world_rect.x, world_rect.y, world_rect.width, world_rect.height)
+    end
+
     local r, g, b, a = love.graphics.getColor()
     love.graphics.setColor(background_color.r, background_color.b, background_color.g, background_color.a)
     love.graphics.rectangle("fill", 0, 0, rect.width, rect.height)
@@ -71,6 +79,7 @@ function Node()
     for _, child in ipairs(children) do
       child.draw()
     end
+    love.graphics.setScissor(s_x, s_y, s_w, s_h)
   end
 
   -- Empty function for overriding in "subclasses"
@@ -167,9 +176,25 @@ function Node()
   function self.updateTransform()
     local_transform:setTransformation(rect.x, rect.y, rotation, scale_x, scale_y, origin_x, origin_y, skew_x, skew_y)
     self.updateGlobalTransform()
+    self.updateWorldRect()
     for _, child in ipairs(children) do
       child.updateTransform()
     end
+  end
+
+  function self.updateWorldRect()
+    local x1, y1 = self.toWorld(0, 0)
+    local x2, y2 = self.toWorld(rect.width, 0)
+    local x3, y3 = self.toWorld(rect.width, rect.height)
+    local x4, y4 = self.toWorld(0, rect.height)
+
+    local min_x = math.min(x1, x2, x3, x4)
+    local max_x = math.max(x1, x2, x3, x4)
+
+    local min_y = math.min(y1, y2, y3, y4)
+    local max_y = math.max(y1, y2, y3, y4)
+
+    world_rect.set(min_x, min_y, max_x - min_x, max_y - min_y)
   end
 
   function self.updateGlobalTransform()
@@ -203,6 +228,10 @@ function Node()
 
   function self.getRect()
     return rect
+  end
+
+  function self.getWorldRect()
+    return world_rect
   end
 
   function self.setScale(new_scale_x, new_scale_y)
@@ -288,6 +317,15 @@ function Node()
 
   function self.getDebug()
     return debug
+  end
+
+  function self.setScissor(on)
+    scissor = on
+    return self
+  end
+
+  function self.getScissor()
+    return scissor
   end
 
   function self.setBackgroundColor(r, g, b, a)

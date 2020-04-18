@@ -18,6 +18,9 @@ function Input(text, font)
   local on_focus_lost = nil
   local on_confirm = nil
 
+  self.setScissor(true)
+  self.setMode("start", "ending", "none", true)
+
   self.setPressed(function()
     self.setFocused(true)
     return true

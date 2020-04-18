@@ -11,7 +11,7 @@ function love.load()
 
   root
     .setRect(100, 100, 300, 300)
-    .setScale(1.7)
+    .setScale(1.5)
     .setDebug(true)
     .setBackgroundColor(0.2, 0.2, 0.2, 1)
 
@@ -30,7 +30,7 @@ function love.load()
     local node2 = Image(image)
       .setRect(25, 15, 40, 20)
       .setOrigin(20, 10)
-      .setMode("center_proportional")
+      .setMode("ending", "center", "proportional")
 
     node1.addChild(node2)
     grid.addChild(node1)
@@ -41,8 +41,7 @@ function love.load()
   local input = Input("Input Box")
     .setRect(10, 10, 200, 20)
     .setBackgroundColor(0.8, 0.2, 0.2, 1)
-    .setMode("proportional")
-    .setMax(20)
+    .setMax(60)
 
   input.setOnFocus(function()
     input.setBackgroundColor(0.1, 0.2, 0.2, 1)
