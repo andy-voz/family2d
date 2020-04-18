@@ -44,9 +44,10 @@ function Input(text, font)
     if not focused then return end
 
     local text_string = self.getText()
-    if text_string:len() <= 0 then return end
 
     if key == "backspace" then
+      if text_string:len() <= 0 then return end
+
       local byteoffset = utf8.offset(text_string, -1)
       self.setText(string.sub(text_string, 1, byteoffset - 1))
     elseif key == "return" and on_confirm ~= nil then

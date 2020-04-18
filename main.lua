@@ -25,6 +25,7 @@ function love.load()
 
   local list = List()
     .setRect(10, 50, 100, 200)
+
   for i = 0, 10 do
     local node1 = Node()
       .setRect(0, 0, 100, 30)
