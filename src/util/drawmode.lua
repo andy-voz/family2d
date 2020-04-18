@@ -1,3 +1,35 @@
+local DrawMode = {}
+
+function DrawMode.center(rect_size, drawable_size)
+  return (rect_size - drawable_size) / 2
+end
+
+function DrawMode.start()
+  return 0
+end
+
+function DrawMode.ending(rect_w, drawable_w)
+  return rect_w - drawable_w
+end
+
+function DrawMode.none()
+  return 1, 1
+end
+
+function DrawMode.proportional(rect, drawable)
+  local scale_x = rect.width / drawable:getWidth()
+  local scale_y = rect.height / drawable:getHeight()
+  local scale = math.min(scale_x, scale_y)
+
+  return scale, scale
+end
+
+function DrawMode.fill(rect, drawable)
+  local scale_x = rect.width / drawable:getWidth()
+  local scale_y = rect.height / drawable:getHeight()
+  return scale_x, scale_y
+end
+
 function ModeInfo(rect, drawable, mode_x, mode_y, scale, scroll_x, scroll_y)
   local self = {}
 
@@ -41,34 +73,3 @@ function ModeInfo(rect, drawable, mode_x, mode_y, scale, scroll_x, scroll_y)
   return self
 end
 
-DrawMode = {}
-
-function DrawMode.center(rect_size, drawable_size)
-  return (rect_size - drawable_size) / 2
-end
-
-function DrawMode.start()
-  return 0
-end
-
-function DrawMode.ending(rect_w, drawable_w)
-  return rect_w - drawable_w
-end
-
-function DrawMode.none()
-  return 1, 1
-end
-
-function DrawMode.proportional(rect, drawable)
-  local scale_x = rect.width / drawable:getWidth()
-  local scale_y = rect.height / drawable:getHeight()
-  local scale = math.min(scale_x, scale_y)
-
-  return scale, scale
-end
-
-function DrawMode.fill(rect, drawable)
-  local scale_x = rect.width / drawable:getWidth()
-  local scale_y = rect.height / drawable:getHeight()
-  return scale_x, scale_y
-end
