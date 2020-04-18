@@ -30,8 +30,8 @@ function Image(image)
   end
 
   function self.setMode(mode_x, mode_y, scale, scroll_x, scroll_y)
+    mode_info.set(mode_x, mode_y, scale, scroll_x, scroll_y)
     if image ~= nil then
-      mode_info.set(mode_x, mode_y, scale, scroll_x, scroll_y)
       mode_info.calculate(self.getRect(), image)
     end
     return self
