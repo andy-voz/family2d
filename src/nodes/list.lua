@@ -27,13 +27,13 @@ function List()
 
   ProcessedController.addNode(self)
 
-  self.setProcessed(function(node, event)
+  self.addInputProcessor("processed", function(node, event)
     if node == self then return end
 
     pressed = false
   end)
 
-  self.setMoved(function(event)
+  self.addInputProcessor("moved", function(event)
     if not pressed then return false end
 
     delta_x = delta_x + event.dx
@@ -49,12 +49,12 @@ function List()
     return true
   end)
 
-  self.setPressed(function()
+  self.addInputProcessor("pressed", function()
     pressed = true
     return true
   end)
 
-  self.setReleased(function()
+  self.addInputProcessor("released", function()
     pressed = false
     return true
   end)

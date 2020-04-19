@@ -21,12 +21,12 @@ function Input(text, font)
   self.setScissor(true)
   self.setMode("start", "ending", "none", true)
 
-  self.setPressed(function()
+  self.addInputProcessor("pressed", function()
     self.setFocused(true)
     return true
   end)
 
-  self.setProcessed(function(node, event)
+  self.addInputProcessor("processed", function(node, event)
     if event.type ~= "pressed" then return end
 
     if node ~= self then
@@ -34,13 +34,13 @@ function Input(text, font)
     end
   end)
 
-  self.setTextInput(function(text)
+  self.addInputProcessor("text_input", function(text)
     if not focused or (max ~= nil and self.getText():len()) >= max then return end
 
     self.setText(self.getText()..text)
   end)
 
-  self.setKeyPressed(function(key)
+  self.addInputProcessor("key_pressed", function(key)
     if not focused then return end
 
     local text_string = self.getText()

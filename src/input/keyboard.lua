@@ -22,9 +22,8 @@ local function iterate(type, arg1, arg2, arg3)
   for _, node in ipairs(nodes) do
     if not node.getEnabled() then goto continue end
 
-    local callback = node.getController()[type]
-    if callback ~= nil then
-      callback(arg1, arg2, arg3)
+    for _, processor in ipairs(node.getController()[type]) do
+      processor(arg1, arg2, arg3)
     end
     ::continue::
   end

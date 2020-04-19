@@ -20,9 +20,8 @@ end
 
 function ProcessedController.processed(node, event)
   for _, n in ipairs(nodes) do
-    local callback = n.getController()["processed"]
-    if callback ~= nil then
-      callback(node, event)
+    for _, processor in ipairs(n.getController()["processed"]) do
+      processor(node, event)
     end
   end
 end

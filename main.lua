@@ -19,7 +19,7 @@ function love.load()
     tapped_string = input_event.type.." root"
     return true
   end
-  root.setPressed(callback)
+  root.addInputProcessor("pressed", callback)
 
   local image = love.graphics.newImage("res/image.png")
   local font = love.graphics.newFont("res/font.ttf", 50)

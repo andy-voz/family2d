@@ -104,13 +104,12 @@ function Node()
     local local_x, local_y = self.fromWorld(input_event.x, input_event.y)
     if not rect.inBounds(local_x, local_y) then return nil end
 
-    local callback = controller[input_event.type]
-
-    if callback ~= nil then
-      if callback(input_event) then return self end
+    local processed = false
+    for _, processor in ipairs(controller[input_event.type]) do
+      processed = processed or processor(input_event)
     end
 
-    return nil
+    if processed then return self else return nil end
   end
 
   function self.addChild(node, pos)
@@ -284,11 +283,6 @@ function Node()
     return skew_x, skew_y
   end
 
-  function self.setOnTap(onTapListener)
-    onTap = onTapListener
-    return self
-  end
-
   function self.setEnabled(on)
     enabled = on
     return self
@@ -358,39 +352,20 @@ function Node()
     return controller
   end
 
-  function self.setPressed(pressed)
-    controller.pressed = pressed
-    return self
+  function self.addInputProcessor(type, processor)
+    table.insert(controller[type], processor)
   end
 
-  function self.setReleased(released)
-    controller.released = released
-    return self
-  end
+  function self.removeInputProcessor(type, processor)
+    local index = nil
+    for i, p in ipairs(controller[type]) do
+      if processor == p then
+        index = i
+        break
+      end
+    end
 
-  function self.setMoved(moved)
-    controller.moved = moved
-    return self
-  end
-
-  function self.setKeyPressed(key_pressed)
-    controller.key_pressed = key_pressed
-    return self
-  end
-
-  function self.setKeyReleased(key_released)
-    controller.key_released = key_released
-    return self
-  end
-
-  function self.setTextInput(text_input)
-    controller.text_input = text_input
-    return self
-  end
-
-  function self.setProcessed(processed)
-    controller.processed = processed
-    return self
+    if index ~= nil then table.remove(controller[type], index) end
   end
 
   function self.getGlobalTransform()
