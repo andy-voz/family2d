@@ -17,7 +17,7 @@ end
 
 function require_family()
   print("Require FAMILY")
-  local files = recursiveEnumerate(string.sub(FAMILY, 1, #FAMILY - 1), function(file)
+  local files = recursiveEnumerate(string.sub(FAMILY:gsub("%.", "/"), 1, #FAMILY - 1), function(file)
     if string.find(file, "family.lua") then return end
 
     print("Require "..file)
