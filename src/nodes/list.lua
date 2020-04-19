@@ -62,7 +62,7 @@ function List()
   local super_destroy = self.destroy
   function self.destroy()
     ProcessedController.removeNode(self)
-    super_destroy
+    super_destroy()
   end
 
   local super_update = self.update
