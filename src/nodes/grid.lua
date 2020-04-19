@@ -12,6 +12,8 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local margin_x = margin_x or 0
   local margin_y = margin_y or 0
 
+  local need_update = false
+
   function self.updateFromIndex(index)
     local index = index or 0
 
@@ -29,7 +31,12 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     end
   end
 
-  function self.update()
+  local super_update = self.update
+  function self.update(dt)
+    super_update(dt)
+
+    if not need_update then return end
+
     self.setRect(self.getRect().x, self.getRect().y, 0, 0)
     self.updateFromIndex(0)
   end
@@ -53,7 +60,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setRows(new_rows)
     rows = new_rows
-    self.update()
+    need_update = true
     return self
   end
 
@@ -63,7 +70,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setColumns(new_columns)
     columns = new_columns
-    self.update()
+    need_update = true
     return self
   end
 
@@ -73,7 +80,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setMarginX(new_margin)
     margin_x = new_margin
-    self.update()
+    need_update = true
     return self
   end
 
@@ -83,7 +90,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setMarginY(new_margin)
     margin_y = new_margin
-    self.update()
+    need_update = true
     return self
   end
 
@@ -93,7 +100,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setCellX(new_cell_x)
     cell_x = new_cell_x
-    self.update()
+    need_update = true
     return self
   end
 
@@ -103,7 +110,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setCellY(new_cell_y)
     cell_y = new_cell_y
-    self.update()
+    need_update = true
     return self
   end
 
