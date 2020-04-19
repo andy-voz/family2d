@@ -59,7 +59,15 @@ function List()
     return true
   end)
 
+  local super_destroy = self.destroy
+  function self.destroy()
+    ProcessedController.removeNode(self)
+    super_destroy
+  end
+
+  local super_update = self.update
   function self.update(dt)
+    super_update(dt)
     if not need_update then return end
 
     local pos = 0
@@ -79,8 +87,6 @@ function List()
         child.setRect(pos / scale_x, child.getRect().y, child.getRect().width, child.getRect().height)
         pos = pos + child.getRect().width
       end
-
-      child.update(dt)
     end
   end
 

@@ -92,6 +92,12 @@ function Node()
     end
   end
 
+  function self.destroy()
+    for _, child in ipairs(children) do
+      child.destroy()
+    end
+  end
+
   --
   function self.input(input_event)
     if not enabled or not visible then return nil end

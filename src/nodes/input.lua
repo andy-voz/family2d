@@ -55,6 +55,13 @@ function Input(text, font)
     end
   end)
 
+  local super_destroy = self.destroy
+  function self.destroy()
+    KeyboardController.removeNode(self)
+    ProcessedController.removeNode(self)
+    super_destroy()
+  end
+
   function self.setMax(new_max)
     max = new_max
     return self
