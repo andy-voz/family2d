@@ -354,6 +354,7 @@ function Node()
 
   function self.addInputProcessor(type, processor)
     table.insert(controller[type], processor)
+    return self
   end
 
   function self.removeInputProcessor(type, processor)
@@ -366,6 +367,7 @@ function Node()
     end
 
     if index ~= nil then table.remove(controller[type], index) end
+    return self
   end
 
   function self.getGlobalTransform()
