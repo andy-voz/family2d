@@ -1,6 +1,7 @@
 require(FAMILY.."util.rect")
 require(FAMILY.."util.color")
 require(FAMILY.."input.controller")
+require(FAMILY.."util.anchor")
 
 function Node()
   local self = {}
@@ -10,6 +11,8 @@ function Node()
 
   local rect = Rect()
   local world_rect = Rect()
+
+  local anchor = Anchor("start", "start")
 
   -- scale factor of the node
   local scale_x = 1
@@ -174,6 +177,7 @@ function Node()
   -- global transform by multiplying parent global and child local matrixes
   function self.setParent(new_parent)
     parent = new_parent
+    self.setAnchor(anchor.x, anchor.y)
     self.updateTransform()
     if not debug and parent.getDebug() then
       self.setDebug(true)
@@ -229,6 +233,10 @@ function Node()
 
   function self.setRect(x, y, width, height)
     rect.set(x, y, width, height)
+    local x, y = anchor.calc(parent, self)
+
+    rect.x = x
+    rect.y = y
 
     self.updateTransform()
     return self
@@ -382,6 +390,16 @@ function Node()
 
   function self.getLocalTransform()
     return local_transform
+  end
+
+  function self.setAnchor(x, y)
+    anchor.set(x, y)
+    self.setRect(rect.x, rect.y, rect.width, rect.height)
+    return self
+  end
+
+  function self.getAnchor()
+    return anchor
   end
 
   return self

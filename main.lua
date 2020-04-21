@@ -10,7 +10,7 @@ function love.load()
   root = Node()
 
   root
-    .setRect(50, 50, 250, 250)
+    .setRect(0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     .setScale(2)
     .setDebug(true)
     .setBackgroundColor("#B0D7FFFF")
@@ -25,7 +25,8 @@ function love.load()
   local font = love.graphics.newFont("res/font.ttf", 50)
 
   local list = List()
-    .setRect(10, 50, 100, 150)
+    .setRect(0, 0, 100, 150)
+    .setAnchor("center", "start")
     .setBackgroundColor("#AA95E8FF")
 
   for i = 0, 10 do
@@ -72,6 +73,10 @@ function love.load()
   end)
 
   root.addChild(input)
+end
+
+function love.resize(width, height)
+  root.setRect(0, 0, width, height)
 end
 
 function love.draw()
