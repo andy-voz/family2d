@@ -186,7 +186,9 @@ function Node()
   end
 
   function self.updateTransform()
-    local_transform:setTransformation(rect.x, rect.y, rotation, scale_x, scale_y, origin_x, origin_y, skew_x, skew_y)
+    local x, y = anchor.calc(parent, self)
+
+    local_transform:setTransformation(rect.x + x, rect.y + y, rotation, scale_x, scale_y, origin_x, origin_y, skew_x, skew_y)
     self.updateGlobalTransform()
     self.updateWorldRect()
     for _, child in ipairs(children) do
@@ -233,10 +235,6 @@ function Node()
 
   function self.setRect(x, y, width, height)
     rect.set(x, y, width, height)
-    local x, y = anchor.calc(parent, self)
-
-    rect.x = x
-    rect.y = y
 
     self.updateTransform()
     return self
@@ -394,7 +392,6 @@ function Node()
 
   function self.setAnchor(x, y)
     anchor.set(x, y)
-    self.setRect(rect.x, rect.y, rect.width, rect.height)
     return self
   end
 

@@ -88,6 +88,7 @@ function List()
         pos = pos + child.getRect().width
       end
     end
+    need_update = false
   end
 
   function self.calcContentSize()

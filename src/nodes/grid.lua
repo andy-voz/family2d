@@ -39,6 +39,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
     self.setRect(self.getRect().x, self.getRect().y, 0, 0)
     self.updateFromIndex(0)
+    need_update = false
   end
 
   function self.onChildAdd(index)

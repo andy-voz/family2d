@@ -9,7 +9,7 @@ function AnchorType.ending(parent_size, child_size)
 end
 
 function AnchorType.center(parent_size, child_size)
-  return (parent_size - child_size) / 2
+  return parent_size / 2
 end
 
 function Anchor(x, y)
@@ -23,8 +23,9 @@ function Anchor(x, y)
   function self.calc(parent, child)
     if parent == nil then return 0, 0 end
 
-    local x = AnchorType[self.x](parent.getRect().width, child.getRect().width) + child.getRect().x
-    local y = AnchorType[self.y](parent.getRect().width, child.getRect().height) + child.getRect().y
+    local s_x, s_y = child.getScale()
+    local x = AnchorType[self.x](parent.getRect().width, child.getRect().width * s_x)
+    local y = AnchorType[self.y](parent.getRect().height, child.getRect().height * s_y)
 
     return x, y
   end
