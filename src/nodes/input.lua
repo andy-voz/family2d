@@ -35,7 +35,7 @@ function Input(text, font)
   end)
 
   self.addInputProcessor("text_input", function(text)
-    if not focused or (max ~= nil and self.getText():len()) >= max then return end
+    if not focused or (max ~= nil and self.getText():len() >= max) then return end
 
     self.setText(self.getText()..text)
   end)
