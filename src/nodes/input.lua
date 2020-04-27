@@ -5,7 +5,7 @@ require(FAMILY.."input.processed")
 local utf8 = require("utf8")
 
 function Input(text, font)
-  self = Text(text, font)
+  local self = Text(text, font)
 
   KeyboardController.addNode(self)
   ProcessedController.addNode(self)
