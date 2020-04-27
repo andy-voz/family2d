@@ -13,7 +13,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local margin_y = margin_y or 0
 
   function self.updateFromIndex(index)
-    local index = index or 0
+    local index = index or 1
 
     for i = index, #self.getChildren() do
       column = math.fmod(i, columns)
@@ -31,7 +31,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.onUpdate(dt)
     self.setRect(self.getRect().x, self.getRect().y, 0, 0)
-    self.updateFromIndex(0)
+    self.updateFromIndex()
   end
 
   function self.onChildAdd(index)
