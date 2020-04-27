@@ -12,8 +12,6 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local margin_x = margin_x or 0
   local margin_y = margin_y or 0
 
-  local need_update = false
-
   function self.updateFromIndex(index)
     local index = index or 0
 
@@ -31,15 +29,9 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
     end
   end
 
-  local super_update = self.update
-  function self.update(dt)
-    super_update(dt)
-
-    if not need_update then return end
-
+  function self.onUpdate(dt)
     self.setRect(self.getRect().x, self.getRect().y, 0, 0)
     self.updateFromIndex(0)
-    need_update = false
   end
 
   function self.onChildAdd(index)
@@ -61,7 +53,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setRows(new_rows)
     rows = new_rows
-    need_update = true
+    self.setDirty()
     return self
   end
 
@@ -71,7 +63,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setColumns(new_columns)
     columns = new_columns
-    need_update = true
+    self.setDirty()
     return self
   end
 
@@ -81,7 +73,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setMarginX(new_margin)
     margin_x = new_margin
-    need_update = true
+    self.setDirty()
     return self
   end
 
@@ -91,7 +83,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setMarginY(new_margin)
     margin_y = new_margin
-    need_update = true
+    self.setDirty()
     return self
   end
 
@@ -101,7 +93,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setCellX(new_cell_x)
     cell_x = new_cell_x
-    need_update = true
+    self.setDirty()
     return self
   end
 
@@ -111,7 +103,7 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   function self.setCellY(new_cell_y)
     cell_y = new_cell_y
-    need_update = true
+    self.setDirty()
     return self
   end
 

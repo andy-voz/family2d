@@ -52,6 +52,8 @@ function Node()
   -- parent of current node
   local parent = nil
 
+  local dirty = false
+
   local controller = InputController()
 
   -- Drawing node if visible
@@ -90,9 +92,19 @@ function Node()
   end
 
   function self.update(dt)
+    if dirty then self.updateTransform() else return false end
+
+    self.onUpdate(dt)
+
     for _, child in ipairs(children) do
       child.update(dt)
     end
+
+    dirty = false
+    return true
+  end
+
+  function self.onUpdate(dt)
   end
 
   function self.destroy()
@@ -178,7 +190,7 @@ function Node()
   function self.setParent(new_parent)
     parent = new_parent
     self.setAnchor(anchor.x, anchor.y)
-    self.updateTransform()
+    self.setDirty()
     if not debug and parent.getDebug() then
       self.setDebug(true)
     end
@@ -192,7 +204,7 @@ function Node()
     self.updateGlobalTransform()
     self.updateWorldRect()
     for _, child in ipairs(children) do
-      child.updateTransform()
+      child.setDirty()
     end
   end
 
@@ -236,7 +248,7 @@ function Node()
   function self.setRect(x, y, width, height)
     rect.set(x, y, width, height)
 
-    self.updateTransform()
+    self.setDirty()
     return self
   end
 
@@ -252,7 +264,7 @@ function Node()
     scale_x = new_scale_x or 1
     scale_y = new_scale_y or scale_x
 
-    self.updateTransform()
+    self.setDirty()
     return self
   end
 
@@ -263,7 +275,7 @@ function Node()
   function self.setRotation(new_rotation)
     rotation = new_rotation or 0
 
-    self.updateTransform()
+    self.setDirty()
     return self
   end
 
@@ -275,7 +287,7 @@ function Node()
     origin_x = x or 0
     origin_y = y or 0
 
-    self.updateTransform()
+    self.setDirty()
     return self
   end
 
@@ -287,7 +299,7 @@ function Node()
     skew_x = x or 0
     skew_y = y or 0
 
-    self.updateTransform()
+    self.setDirty()
     return self
   end
 
@@ -397,6 +409,18 @@ function Node()
 
   function self.getAnchor()
     return anchor
+  end
+
+  function self.setDirty()
+    dirty = true
+
+    if parent ~= nil then parent.setDirty() end
+
+    return self
+  end
+
+  function self.getDirty()
+    return dirty
   end
 
   return self

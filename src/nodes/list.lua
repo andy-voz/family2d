@@ -21,8 +21,6 @@ function List()
   local content_delta_w = 0
   local content_delta_h = 0
 
-  local need_update = false
-
   self.setScissor(true)
 
   ProcessedController.addNode(self)
@@ -45,7 +43,7 @@ function List()
     delta_x = math.max(content_delta_w, delta_x)
     delta_y = math.max(content_delta_h, delta_y)
 
-    need_update = true
+    self.setDirty()
     return true
   end)
 
@@ -65,11 +63,7 @@ function List()
     super_destroy()
   end
 
-  local super_update = self.update
-  function self.update(dt)
-    super_update(dt)
-    if not need_update then return end
-
+  function self.onUpdate(dt)
     local pos = 0
     local scale_x, _, _, _, _, scale_y = self.getGlobalTransform():getMatrix()
 
@@ -88,7 +82,6 @@ function List()
         pos = pos + child.getRect().width
       end
     end
-    need_update = false
   end
 
   function self.calcContentSize()
@@ -105,29 +98,21 @@ function List()
   end
 
   function self.onChildAdd(index)
-    need_update = true
+    self.setDirty()
 
     self.calcContentSize()
   end
 
   function self.onChildRemove(index)
-    need_update = true
+    self.setDirty()
 
     self.calcContentSize()
-  end
-
-  local super_setRect = self.setRect
-  function self.setRect(x, y, width, height)
-    super_setRect(x, y, width, height)
-
-    need_update = true
-    return self
   end
 
   function self.setOrientation(new_orientation)
     orinetation = new_orientation
     delta = 0
-    need_update = true
+    self.setDirty()
     return self
   end
 
