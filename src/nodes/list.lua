@@ -93,8 +93,8 @@ function List()
       content_h = content_h + child.getRect().height
     end
 
-    content_delta_w = self.getRect().width - content_w
-    content_delta_h = self.getRect().height - content_h
+    content_delta_w = math.min(0, self.getRect().width - content_w)
+    content_delta_h = math.min(0, self.getRect().height - content_h)
   end
 
   function self.onChildAdd(index)
