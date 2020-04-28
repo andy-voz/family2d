@@ -33,7 +33,7 @@ function love.load()
     .setOrigin(50, 75)
 
   for i = 0, 10 do
-    local node1 = Button()
+    local node1 = TextButton("Click Me!", font)
       .setRect(0, 0, 100, 30)
       .addStateImage("normal", love.graphics.newImage("res/b_normal.png"))
       .addStateImage("pressed", love.graphics.newImage("res/b_pressed.png"))
@@ -43,6 +43,8 @@ function love.load()
       .addOnClick(function()
         print(tostring(i).." Clicked")
       end)
+
+    node1.getTextNode().setVirtualHeight(12)
 
     if i == 4 then
       node1.setEnabled(false)
