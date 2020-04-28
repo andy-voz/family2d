@@ -6,6 +6,7 @@ local root = nil
 local tapped_string = ""
 
 function love.load()
+  love.graphics.setDefaultFilter("nearest", "nearest")
   love.keyboard.setKeyRepeat(true)
   root = Node()
 
@@ -32,22 +33,20 @@ function love.load()
     .setOrigin(50, 75)
 
   for i = 0, 10 do
-    local node1 = Node()
+    local node1 = Button()
       .setRect(0, 0, 100, 30)
+      .addStateImage("normal", love.graphics.newImage("res/b_normal.png"))
+      .addStateImage("pressed", love.graphics.newImage("res/b_pressed.png"))
+      .addStateImage("disabled", love.graphics.newImage("res/b_disabled.png"))
+      .setThin(true)
+      .setMode("center", "center", "fill")
+      .addOnClick(function()
+        print(tostring(i).." Clicked")
+      end)
 
-    local node2 = Image(image)
-      .setRect(75, 5, 20, 20)
-      .setMode("ending", "center", "proportional")
-
-    node1.addChild(node2)
-
-    local node3 = Text("List entry", font)
-      .setRect(10, 5, 60, 20)
-      .setVirtualHeight(12)
-      .setTintColor(0, 0, 0, 1)
-      .setMode("center", "center")
-
-    node1.addChild(node3)
+    if i == 4 then
+      node1.setEnabled(false)
+    end
     list.addChild(node1)
   end
 
