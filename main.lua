@@ -15,8 +15,7 @@ function decode(path)
   return result
 end
 
-function load_node(path)
-  local data = decode(path)
+function load_node(data)
   local node = NodeTypes[data.type]()
   return node.load(data)
 end
@@ -25,14 +24,12 @@ function love.load()
   love.graphics.setDefaultFilter("nearest", "nearest")
   love.keyboard.setKeyRepeat(true)
 
-  local image = love.graphics.newImage("res/image.png")
-  local font = love.graphics.newFont("res/font.ttf", 50)
-
-  root = load_node("res/nodes/main.json")
+  root = load_node(decode("res/nodes/main.json"))
   local list = root.findById("list")
 
+  local list_el_data = decode("res/nodes/text_button.json")
   for i = 0, 10 do
-    local node1 = load_node("res/nodes/text_button.json")
+    local node1 = load_node(list_el_data)
       .addOnClick(function()
         print(tostring(i).." Clicked")
       end)
