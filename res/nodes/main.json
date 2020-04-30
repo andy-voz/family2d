@@ -1,11 +1,50 @@
 {
+  "type": "Node",
   "id": "root",
   "rect": {
-    "x": 0,
-    "y": 0,
-    "width": 800,
-    "height": 600
+    "x": 0, "y": 0, "width": 800, "height": 600
   },
+  "debug": true,
   "background_color": "#B0D7FFFF",
-  "children": {}
+  "children": [
+    {
+      "type": "List",
+      "id": "list",
+      "rect": {
+        "x": 0, "y": 50, "width": 100, "height": 150
+      },
+      "anchor": {
+        "x": "center", "y": "center"
+      },
+      "background_color": "#AA95E8FF",
+      "scale_x": 3,
+      "scale_y": 3,
+      "origin_x": 50,
+      "origin_y": 75
+    },
+    {
+      "type": "Input",
+      "id": "input",
+      "rect": {
+        "x": 10, "y": 10, "width": 100, "height": 20
+      },
+      "background_color": "#95E8D1FF",
+      "mode": {
+        "mode_x": "start", "mode_y": "ending", "scale": "none", "scroll_x": true, "scroll_y": false
+      },
+      "virtual_height": 12,
+      "scale_x": 3,
+      "scale_y": 3,
+      "input": {
+        "max": 60
+      },
+      "text": {
+        "text": "Input Box",
+        "font": {
+          "name": "res/font.ttf",
+          "height": 50
+        }
+      }
+    }
+  ]
 }

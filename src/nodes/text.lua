@@ -26,6 +26,7 @@ function Text(text, font)
         font = self.getR() ~= nil and
           self.getR().getFont(text_data.font.name) or
           love.graphics.newFont(text_data.font.name, text_data.font.height)
+        self.setFont(font)
       end
       if text_data.mode ~= nil then
         local new_mode = text_data.mode

@@ -1,50 +1,41 @@
 require "src.family"
+json = require "lib.rxi-json.json"
 require_family()
 
 local root = nil
 
 local tapped_string = ""
 
+function decode(path)
+  local file = love.filesystem.newFile(path)
+  file:open("r")
+  local result = json.decode(file:read())
+  file:close()
+
+  return result
+end
+
+function load_node(path)
+  local data = decode(path)
+  local node = NodeTypes[data.type]()
+  return node.load(data)
+end
+
 function love.load()
   love.graphics.setDefaultFilter("nearest", "nearest")
   love.keyboard.setKeyRepeat(true)
-  root = Node()
-
-  root
-    .setRect(0, 0, love.graphics.getWidth(), love.graphics.getHeight())
-    .setScale(1)
-    .setDebug(true)
-    .setBackgroundColor("#B0D7FFFF")
-
-  local callback = function(input_event)
-    tapped_string = input_event.type.." root"
-    return true
-  end
-  root.addInputProcessor("pressed", callback)
 
   local image = love.graphics.newImage("res/image.png")
   local font = love.graphics.newFont("res/font.ttf", 50)
 
-  local list = List()
-    .setRect(0, 50, 100, 150)
-    .setAnchor("center", "center")
-    .setBackgroundColor("#AA95E8FF")
-    .setScale(3)
-    .setOrigin(50, 75)
+  root = load_node("res/nodes/main.json")
+  local list = root.findById("list")
 
   for i = 0, 10 do
-    local node1 = TextButton("Click Me!", font)
-      .setRect(0, 0, 100, 30)
-      .addStateImage("normal", love.graphics.newImage("res/b_normal.png"))
-      .addStateImage("pressed", love.graphics.newImage("res/b_pressed.png"))
-      .addStateImage("disabled", love.graphics.newImage("res/b_disabled.png"))
-      .setThin(true)
-      .setMode("center", "center", "fill")
+    local node1 = load_node("res/nodes/text_button.json")
       .addOnClick(function()
         print(tostring(i).." Clicked")
       end)
-
-    node1.getTextNode().setVirtualHeight(12)
 
     if i == 4 then
       node1.setEnabled(false)
@@ -52,16 +43,7 @@ function love.load()
     list.addChild(node1)
   end
 
-  root.addChild(list)
-
-  local input = Input("Input Box", font)
-    .setRect(10, 10, 100, 20)
-    .setBackgroundColor("#95E8D1FF")
-    .setTintColor(0, 0, 0, 1)
-    .setMax(60)
-    .setMode("start", "ending", "none", true)
-    .setVirtualHeight(12)
-    .setScale(3)
+  local input = root.findById("input")
 
   input.setOnFocus(function()
     input.setBackgroundColor("#9CFF92FF")
@@ -75,8 +57,6 @@ function love.load()
     input.setFocused(false)
     print(input.getText())
   end)
-
-  root.addChild(input)
 end
 
 function love.resize(width, height)

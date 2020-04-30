@@ -52,6 +52,7 @@ function Button()
             self.getR().getImage(path) or
             love.graphics.newImage(path)
         end
+        self.setState(state)
       end
     end
 

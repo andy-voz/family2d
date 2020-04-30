@@ -64,6 +64,8 @@ function Node()
   local controller = InputController()
 
   function self.load(data)
+    id = data.id or id
+
     if data.rect ~= nil then rect.set(data.rect.x, data.rect.y, data.rect.width, data.rect.height) end
     if data.anchor ~= nil then anchor = Anchor(data.anchor.x, data.anchor.y) end
 
@@ -86,11 +88,13 @@ function Node()
     if data.background_color ~= nil then background_color = Color(data.background_color) end
     if data.tint_color ~= nil then tint_color = Color(data.tint_color) end
 
-    for _, child in ipairs(data.children) do
-      node = NodeTypes[child.type]()
-      node.load(child)
-      node.setDirty()
-      self.addChild(node)
+    if data.children ~= nil then
+      for _, child in ipairs(data.children) do
+        node = NodeTypes[child.type]()
+        node.load(child)
+        node.setDirty()
+        self.addChild(node)
+      end
     end
 
     dirty = true

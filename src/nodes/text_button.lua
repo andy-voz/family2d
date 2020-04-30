@@ -15,7 +15,7 @@ function TextButton(text, font)
 
     local but_data = data.text_button
     if but_data ~= nil then
-      if but_data.text ~= nil then text.load(but_data.text) end
+      if but_data.text_node ~= nil then text.load(but_data.text_node) end
     end
 
     return self
@@ -36,3 +36,5 @@ function TextButton(text, font)
 
   return self
 end
+
+NodeTypes.TextButton = TextButton

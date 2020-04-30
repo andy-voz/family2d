@@ -1,0 +1,30 @@
+{
+  "type": "TextButton",
+  "rect": {
+    "x": 0, "y": 0, "width": 100, "height": 30
+  },
+  "image": {
+    "mode": {
+      "mode_x": "center", "mode_y": "center", "scale": "fill"
+    }
+  },
+  "button": {
+    "states": {
+      "normal": "res/b_normal.png",
+      "pressed": "res/b_pressed.png",
+      "disabled": "res/b_disabled.png"
+    },
+    "thin": true
+  },
+  "text_button": {
+    "text_node": {
+      "text": {
+        "text": "Click Me!",
+        "font": {
+          "name": "res/font.ttf", "height": 50
+        },
+        "virtual_height": 12
+      }
+    }
+  }
+}
