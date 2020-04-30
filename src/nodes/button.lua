@@ -22,6 +22,42 @@ function Button()
 
   local callbacks = {}
 
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local but_data = data.button
+    if but_data ~= nil then
+      thin = but_data.thin or thin
+      threshold = but_data.threshold or threshold
+
+      if but_data.states ~= nil then
+        local path = but_data.states.normal
+        if path ~= nil then
+          states.normal = self.getR() ~= nil and
+            self.getR().getImage(path) or
+            love.graphics.newImage(path)
+        end
+
+        path = but_data.states.pressed
+        if path ~= nil then
+          states.pressed = self.getR() ~= nil and
+            self.getR().getImage(path) or
+            love.graphics.newImage(path)
+        end
+
+        path = but_data.states.disabled
+        if path ~= nil then
+          states.disabled = self.getR() ~= nil and
+            self.getR().getImage(path) or
+            love.graphics.newImage(path)
+        end
+      end
+    end
+
+    return self
+  end
+
   ProcessedController.addNode(self)
 
   self.addInputProcessor("processed", function(node, event)
@@ -133,3 +169,5 @@ function Button()
 
   return self
 end
+
+NodeTypes.Button = Button

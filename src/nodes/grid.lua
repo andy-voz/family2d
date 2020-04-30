@@ -12,6 +12,25 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local margin_x = margin_x or 0
   local margin_y = margin_y or 0
 
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local grid_data = data.grid
+    if grid_data ~= nil then
+      rows = grid_data.rows or rows
+      columns = grid_data.columns or columns
+
+      cell_x = grid_data.cell_x or cell_x
+      cell_y = grid_data.cell_y or cell_y
+
+      margin_x = grid_data.margin_x or margin_x
+      margin_y = grid_data.margin_y or margin_y
+    end
+
+    return self
+  end
+
   function self.updateFromIndex(index)
     local index = index or 1
 
@@ -115,3 +134,5 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
 
   return self
 end
+
+NodeTypes.Grid = Grid

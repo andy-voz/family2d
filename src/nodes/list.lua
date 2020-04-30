@@ -21,6 +21,18 @@ function List()
   local content_delta_w = 0
   local content_delta_h = 0
 
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local list_data = data.list
+    if list_data ~= nil then
+      orientation = Orientation[data.orientation]
+    end
+
+    return self
+  end
+
   self.setScissor(true)
 
   ProcessedController.addNode(self)
@@ -122,3 +134,5 @@ function List()
 
   return self
 end
+
+NodeTypes.List = List

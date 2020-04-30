@@ -9,6 +9,18 @@ function TextButton(text, font)
 
   self.addChild(text)
 
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local but_data = data.text_button
+    if but_data ~= nil then
+      if but_data.text ~= nil then text.load(but_data.text) end
+    end
+
+    return self
+  end
+
   local super_setRect = self.setRect
   function self.setRect(x, y, width, height)
     super_setRect(x, y, width, height)

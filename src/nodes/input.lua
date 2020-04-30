@@ -18,6 +18,18 @@ function Input(text, font)
   local on_focus_lost = nil
   local on_confirm = nil
 
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local input_data = data.input
+    if input_data ~= nil then
+      max = input_data.max or max
+    end
+
+    return self
+  end
+
   self.setScissor(true)
   self.setMode("start", "ending", "none", true)
 
@@ -119,3 +131,5 @@ function Input(text, font)
 
   return self
 end
+
+NodeTypes.Input = Input

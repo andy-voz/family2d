@@ -13,6 +13,39 @@ function Text(text, font)
   local virtual_height = text:getFont():getHeight()
 
   local mode_info = ModeInfo()
+
+  local super_load = self.load
+  function self.load(data)
+    super_load(data)
+
+    local text_data = data.text
+    if text_data ~= nil then
+      self.setText(text_data.text or text_string)
+      virtual_height = text_data.virtual_height or virtual_height
+      if text_data.font ~= nil then
+        font = self.getR() ~= nil and
+          self.getR().getFont(text_data.font.name) or
+          love.graphics.newFont(text_data.font.name, text_data.font.height)
+      end
+      if text_data.mode ~= nil then
+        local new_mode = text_data.mode
+        mode_info.set(
+          new_mode.mode_x,
+          new_mode.mode_y,
+          new_mode.scale,
+          new_mode.scroll_x,
+          new_mode.scroll_y
+        )
+      end
+    end
+
+    return self
+  end
+
+  function self.onUpdate()
+    mode_info.calculate(self.getRect(), text)
+  end
+
   local super_calcScale = mode_info.calcScale
   function mode_info.calcScale(rect, drawable)
     if virtual_height == text:getFont():getHeight() then
@@ -29,18 +62,10 @@ function Text(text, font)
     mode_info.draw(text)
   end
 
-  local super_setRect = self.setRect
-  function self.setRect(x, y, width, height)
-    super_setRect(x, y, width, height)
-
-    mode_info.calculate(self.getRect(), text)
-    return self
-  end
-
   function self.setText(new_text)
     text_string = new_text
     text:set(text_string)
-    mode_info.calculate(self.getRect(), text)
+    self.setDirty()
     return self
   end
 
@@ -51,7 +76,7 @@ function Text(text, font)
   function self.setFont(new_font)
     font = new_font
     text:setFont(font)
-    mode_info.calulate(self.getRect(), text)
+    self.setDirty()
     return self
   end
 
@@ -61,7 +86,7 @@ function Text(text, font)
 
   function self.setMode(mode_x, mode_y, scale, scroll_x, scroll_y)
     mode_info.set(mode_x, mode_y, scale, scroll_x, scroll_y)
-    mode_info.calculate(self.getRect(), text)
+    self.setDirty()
     return self
   end
 
@@ -71,7 +96,7 @@ function Text(text, font)
 
   function self.setVirtualHeight(new_height)
     virtual_height = new_height
-    mode_info.calculate(self.getRect(), text)
+    self.setDirty()
     return self
   end
 
@@ -81,3 +106,5 @@ function Text(text, font)
 
   return self
 end
+
+NodeTypes.Text = Text

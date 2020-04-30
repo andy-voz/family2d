@@ -3,8 +3,15 @@ require(FAMILY.."util.color")
 require(FAMILY.."input.controller")
 require(FAMILY.."util.anchor")
 
+NodeTypes = {}
+
 function Node()
   local self = {}
+
+  local R = nil
+
+  local type = "Node"
+  local id = nil
 
   local local_transform = love.math.newTransform()
   local global_transform = love.math.newTransform()
@@ -55,6 +62,50 @@ function Node()
   local dirty = false
 
   local controller = InputController()
+
+  function self.load(data)
+    if data.rect ~= nil then rect.set(data.rect.x, data.rect.y, data.rect.width, data.rect.height) end
+    if data.anchor ~= nil then anchor = Anchor(data.anchor.x, data.anchor.y) end
+
+    scale_x = data.scale_x or scale_x
+    scale_y = data.scale_y or scale_y
+
+    origin_x = data.origin_x or origin_x
+    origin_y = data.origin_y or origin_y
+
+    rotation = data.rotation or rotation
+
+    skew_x = data.skew_x or skew_x
+    skew_y = data.skew_y or skew_y
+
+    visible = data.visible or visible
+    enabled = data.enabled or enabled
+    debug = data.debug or debug
+    scissor = data.scissor or scissor
+
+    if data.background_color ~= nil then background_color = Color(data.background_color) end
+    if data.tint_color ~= nil then tint_color = Color(data.tint_color) end
+
+    for _, child in ipairs(data.children) do
+      node = NodeTypes[child.type]()
+      node.load(child)
+      node.setDirty()
+      self.addChild(node)
+    end
+
+    dirty = true
+    return self
+  end
+
+  function self.findById(search_id)
+    if id == search_id then return self end
+
+    for _, child in ipairs(children) do
+      if child.getId() == search_id then
+        return child
+      end
+    end
+  end
 
   -- Drawing node if visible
   function self.draw()
@@ -423,5 +474,29 @@ function Node()
     return dirty
   end
 
+  function self.getType()
+    return type
+  end
+
+  function self.getId()
+    return id
+  end
+
+  function self.setId(new_id)
+    id = new_id
+    return self
+  end
+
+  function self.setR(r)
+    R = r
+    return self
+  end
+
+  function self.getR()
+    return R
+  end
+
   return self
 end
+
+NodeTypes.Node = Node

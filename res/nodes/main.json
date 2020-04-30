@@ -1,0 +1,11 @@
+{
+  "id": "root",
+  "rect": {
+    "x": 0,
+    "y": 0,
+    "width": 800,
+    "height": 600
+  },
+  "background_color": "#B0D7FFFF",
+  "children": {}
+}
