@@ -11,14 +11,14 @@
       "type": "List",
       "id": "list",
       "rect": {
-        "x": 0, "y": 50, "width": 100, "height": 150
+        "x": 0, "y": 0, "width": 100, "height": 150
       },
       "anchor": {
         "x": "center", "y": "center"
       },
       "background_color": "#AA95E8FF",
-      "scale_x": 3,
-      "scale_y": 3,
+      "scale_x": 2,
+      "scale_y": 2,
       "origin_x": 50,
       "origin_y": 75
     },
@@ -29,10 +29,6 @@
         "x": 10, "y": 10, "width": 100, "height": 20
       },
       "background_color": "#95E8D1FF",
-      "mode": {
-        "mode_x": "start", "mode_y": "ending", "scale": "none", "scroll_x": true, "scroll_y": false
-      },
-      "virtual_height": 12,
       "scale_x": 3,
       "scale_y": 3,
       "input": {
@@ -43,7 +39,58 @@
         "font": {
           "name": "res/font.ttf",
           "height": 50
+        },
+        "mode": {
+          "mode_x": "start",
+          "mode_y": "ending",
+          "scale": "none",
+          "scroll_x": true,
+          "scroll_y": false
+        },
+        "virtual_height": 12
+      }
+    },
+    {
+      "type": "Grid",
+      "id": "grid",
+      "rect": { "x": -10, "y": 10, "width": 0, "height": 0 },
+      "anchor": { "x": "ending", "y": "start" },
+      "grid": {
+        "rows": 3,
+        "columns": 2,
+        "cell_x": 80,
+        "cell_y": 30,
+        "margin_x": 10,
+        "margin_y": 20
+      }
+    },
+    {
+      "type": "Text",
+      "id": "time_text",
+      "rect": { "x": 0, "y": -50, "width": 200, "height": 50 },
+      "anchor": { "x": "center", "y": "ending" },
+      "origin_x": 100,
+      "tint_color": "#111111FF",
+      "text": {
+        "text": "Current Time",
+        "font": { "name": "res/font.ttf", "height": 50 },
+        "mode": { "mode_x": "center", "mode_y": "ending", "scale": "proportional" }
+      }
+    },
+    {
+      "type": "Button",
+      "id": "time_but",
+      "rect": { "x": 100, "y": -50, "width": 50, "height": 50 },
+      "anchor": { "x": "center", "y": "ending" },
+      "button": {
+        "states": {
+          "normal": "res/b_normal.png",
+          "pressed": "res/b_pressed.png",
+          "disabled": "res/b_disabled.png"
         }
+      },
+      "image": {
+        "mode": { "mode_x": "center", "mode_y": "center", "scale": "proportional" }
       }
     }
   ]

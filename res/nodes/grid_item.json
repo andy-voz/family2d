@@ -1,0 +1,8 @@
+{
+  "type": "Image",
+  "id": "grid_item",
+  "image": {
+    "image": "res/image.png",
+    "mode": { "mode_x": "center", "mode_y": "center", "scale": "proportional" }
+  }
+}

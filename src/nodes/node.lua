@@ -500,6 +500,10 @@ function Node()
     return R
   end
 
+  function self.getParent()
+    return parent
+  end
+
   return self
 end
 

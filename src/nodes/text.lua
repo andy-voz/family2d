@@ -10,7 +10,7 @@ function Text(text, font)
 
   local text = love.graphics.newText(font, text_string)
 
-  local virtual_height = text:getFont():getHeight()
+  local virtual_height = nil
 
   local mode_info = ModeInfo()
 
@@ -45,11 +45,12 @@ function Text(text, font)
 
   function self.onUpdate()
     mode_info.calculate(self.getRect(), text)
+    print(tostring(self.getId()).."  "..tostring(mode_info.scale_y))
   end
 
   local super_calcScale = mode_info.calcScale
   function mode_info.calcScale(rect, drawable)
-    if virtual_height == text:getFont():getHeight() then
+    if virtual_height == nil then
       return super_calcScale(rect, drawable)
     else
       scale = virtual_height / text:getFont():getHeight()

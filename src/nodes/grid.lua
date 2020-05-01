@@ -51,14 +51,15 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   function self.onUpdate(dt)
     self.setRect(self.getRect().x, self.getRect().y, 0, 0)
     self.updateFromIndex()
+    self.updateTransform()
   end
 
   function self.onChildAdd(index)
-    self.updateFromIndex(index)
+    self.setDirty()
   end
 
   function self.onChildRemove(index)
-    self.updateFromIndex(index)
+    self.setDirty()
   end
 
   local super_setRect = self.setRect

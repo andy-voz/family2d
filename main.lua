@@ -25,19 +25,27 @@ function love.load()
   love.keyboard.setKeyRepeat(true)
 
   root = load_node(decode("res/nodes/main.json"))
-  local list = root.findById("list")
+    .setRect(0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
+  local list = root.findById("list")
   local list_el_data = decode("res/nodes/text_button.json")
   for i = 0, 10 do
-    local node1 = load_node(list_el_data)
+    local list_el = load_node(list_el_data)
       .addOnClick(function()
         print(tostring(i).." Clicked")
       end)
 
     if i == 4 then
-      node1.setEnabled(false)
+      list_el.setEnabled(false)
     end
-    list.addChild(node1)
+    list.addChild(list_el)
+  end
+
+  local grid = root.findById("grid")
+  local grid_el_data = decode("res/nodes/grid_item.json")
+  for i = 0, 5 do
+    local grid_el = load_node(grid_el_data)
+    grid.addChild(grid_el)
   end
 
   local input = root.findById("input")
@@ -54,6 +62,11 @@ function love.load()
     input.setFocused(false)
     print(input.getText())
   end)
+
+  root.findById("time_but")
+    .addOnClick(function()
+      root.findById("time_text").setText(tostring(os.date("%D %I:%M:%S%p", os.time() - 60 * 60)))
+    end)
 end
 
 function love.resize(width, height)

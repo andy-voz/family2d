@@ -20,7 +20,7 @@ function Image(image)
       if image_data.image ~= nil then
         image = self.getR() ~= nil and
           self.getR().getImage(image_data.image) or
-          love.graphics.newImage(image)
+          love.graphics.newImage(image_data.image)
       end
 
       if image_data.mode ~= nil then
