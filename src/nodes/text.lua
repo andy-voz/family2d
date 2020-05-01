@@ -45,7 +45,6 @@ function Text(text, font)
 
   function self.onUpdate()
     mode_info.calculate(self.getRect(), text)
-    print(tostring(self.getId()).."  "..tostring(mode_info.scale_y))
   end
 
   local super_calcScale = mode_info.calcScale

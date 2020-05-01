@@ -62,11 +62,11 @@ function Button()
   ProcessedController.addNode(self)
 
   self.addInputProcessor("processed", function(node, event)
-    if not thin or node == self or state ~= "pressed" then return end
+    if node == self or state ~= "pressed" then return end
 
     if event.type == "released" then
       self.setState("normal")
-    elseif event.type == "moved" then
+    elseif thin and event.type == "moved" then
       current_shift_x = current_shift_x + math.abs(event.dx)
       current_shift_y = current_shift_y + math.abs(event.dy)
 
