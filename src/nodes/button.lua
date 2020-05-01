@@ -62,7 +62,7 @@ function Button()
   ProcessedController.addNode(self)
 
   self.addInputProcessor("processed", function(node, event)
-    if node == self or state ~= "pressed" then return end
+    if not thin or node == self or state ~= "pressed" then return end
 
     if event.type == "released" then
       self.setState("normal")
