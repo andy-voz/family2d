@@ -14,6 +14,10 @@ function Text(text, font)
 
   local mode_info = ModeInfo()
 
+  self.addUpdateListener(function(dt)
+    mode_info.calculate(self.getRect(), text)
+  end)
+
   local super_load = self.load
   function self.load(data)
     super_load(data)
@@ -41,10 +45,6 @@ function Text(text, font)
     end
 
     return self
-  end
-
-  function self.onUpdate()
-    mode_info.calculate(self.getRect(), text)
   end
 
   local super_calcScale = mode_info.calcScale

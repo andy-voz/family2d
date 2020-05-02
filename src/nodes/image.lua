@@ -11,6 +11,12 @@ function Image(image)
     mode_info.calculate(self.getRect(), image)
   end
 
+  self.addUpdateListener(function(dt)
+    if image ~= nil then
+      mode_info.calculate(self.getRect(), image)
+    end
+  end)
+
   local super_load = self.load
   function self.load(data)
     super_load(data)
@@ -36,12 +42,6 @@ function Image(image)
     end
 
     return self
-  end
-
-  function self.onUpdate(dt)
-    if image ~= nil then
-      mode_info.calculate(self.getRect(), image)
-    end
   end
 
   function self.onDraw()

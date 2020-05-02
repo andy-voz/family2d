@@ -12,6 +12,12 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
   local margin_x = margin_x or 0
   local margin_y = margin_y or 0
 
+  self.addUpdateListener(function(dt)
+    self.setRect(self.getRect().x, self.getRect().y, 0, 0)
+    self.updateFromIndex()
+    self.updateTransform()
+  end)
+
   local super_load = self.load
   function self.load(data)
     super_load(data)
@@ -46,12 +52,6 @@ function Grid(rows, columns, cell_x, cell_y, margin_x, margin_y)
       local height = cell_y
       self.getChildren()[i].setRect(x, y, width, height)
     end
-  end
-
-  function self.onUpdate(dt)
-    self.setRect(self.getRect().x, self.getRect().y, 0, 0)
-    self.updateFromIndex()
-    self.updateTransform()
   end
 
   function self.onChildAdd(index)

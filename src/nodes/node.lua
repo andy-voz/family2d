@@ -63,6 +63,8 @@ function Node()
 
   local controller = InputController()
 
+  local update_listeners = {}
+
   function self.load(data)
     id = data.id or id
 
@@ -149,7 +151,9 @@ function Node()
   function self.update(dt)
     if dirty then self.updateTransform() else return false end
 
-    self.onUpdate(dt)
+    for _, listener in ipairs(update_listeners) do
+      listener(dt)
+    end
 
     for _, child in ipairs(children) do
       child.update(dt)
@@ -159,7 +163,22 @@ function Node()
     return true
   end
 
-  function self.onUpdate(dt)
+  function self.addUpdateListener(listener)
+    table.insert(update_listeners, listener)
+    return self
+  end
+
+  function self.removeUpdateListener(listener)
+    local remove_index = nil
+    for i, l in ipairs(update_listeners) do
+      if l == listener then
+        remove_index = i
+        break
+      end
+    end
+
+    if remove_index ~= nil then table.remove(update_listeners, remove_index) end
+    return self
   end
 
   function self.destroy()

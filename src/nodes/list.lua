@@ -69,13 +69,7 @@ function List()
     return true
   end)
 
-  local super_destroy = self.destroy
-  function self.destroy()
-    ProcessedController.removeNode(self)
-    super_destroy()
-  end
-
-  function self.onUpdate(dt)
+  self.addUpdateListener(function(dt)
     local pos = 0
     local scale_x, _, _, _, _, scale_y = self.getGlobalTransform():getMatrix()
 
@@ -94,6 +88,12 @@ function List()
         pos = pos + child.getRect().width
       end
     end
+  end)
+
+  local super_destroy = self.destroy
+  function self.destroy()
+    ProcessedController.removeNode(self)
+    super_destroy()
   end
 
   function self.calcContentSize()
