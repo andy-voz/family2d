@@ -27,8 +27,8 @@ function Text(text, font)
       self.setText(text_data.text or text_string)
       virtual_height = text_data.virtual_height or virtual_height
       if text_data.font ~= nil then
-        font = self.getR() ~= nil and
-          self.getR().getFont(text_data.font.name) or
+        font = family.R ~= nil and
+          family.R.getFont(text_data.font.name) or
           love.graphics.newFont(text_data.font.name, text_data.font.height)
         self.setFont(font)
       end

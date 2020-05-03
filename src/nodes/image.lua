@@ -24,8 +24,8 @@ function Image(image)
     local image_data = data.image
     if image_data ~= nil then
       if image_data.image ~= nil then
-        image = self.getR() ~= nil and
-          self.getR().getImage(image_data.image) or
+        image = family.R ~= nil and
+          family.R.getImage(image_data.image) or
           love.graphics.newImage(image_data.image)
       end
 

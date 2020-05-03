@@ -1,6 +1,6 @@
 require "src.family"
+family.requireAll()
 json = require "lib.rxi-json.json"
-require_family()
 
 local root = nil
 

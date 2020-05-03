@@ -8,8 +8,6 @@ NodeTypes = {}
 function Node()
   local self = {}
 
-  local R = nil
-
   local type = "Node"
   local id = nil
 
@@ -93,7 +91,6 @@ function Node()
     if data.children ~= nil then
       for _, child in ipairs(data.children) do
         local node = NodeTypes[child.type]()
-        node.setR(R)
         node.load(child)
         node.setDirty()
         self.addChild(node)
@@ -266,7 +263,6 @@ function Node()
   function self.setParent(new_parent)
     parent = new_parent
     self.setAnchor(anchor.x, anchor.y)
-    self.setR(new_parent.getR())
     self.setDirty()
     if not debug and parent.getDebug() then
       self.setDebug(true)
@@ -511,15 +507,6 @@ function Node()
   function self.setId(new_id)
     id = new_id
     return self
-  end
-
-  function self.setR(r)
-    R = r
-    return self
-  end
-
-  function self.getR()
-    return R
   end
 
   function self.getParent()

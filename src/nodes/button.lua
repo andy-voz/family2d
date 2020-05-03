@@ -34,22 +34,22 @@ function Button()
       if but_data.states ~= nil then
         local path = but_data.states.normal
         if path ~= nil then
-          states.normal = self.getR() ~= nil and
-            self.getR().getImage(path) or
+          states.normal = family.R ~= nil and
+            family.R.getImage(path) or
             love.graphics.newImage(path)
         end
 
         path = but_data.states.pressed
         if path ~= nil then
-          states.pressed = self.getR() ~= nil and
-            self.getR().getImage(path) or
+          states.pressed = family.R ~= nil and
+            family.R.getImage(path) or
             love.graphics.newImage(path)
         end
 
         path = but_data.states.disabled
         if path ~= nil then
-          states.disabled = self.getR() ~= nil and
-            self.getR().getImage(path) or
+          states.disabled = family.R ~= nil and
+            family.R.getImage(path) or
             love.graphics.newImage(path)
         end
         self.setState(state)

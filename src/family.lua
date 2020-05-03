@@ -1,6 +1,8 @@
 -- Getting folder that contains our src
 FAMILY = FAMILY or (...):match("(.-)[^%/%.]+$")
 
+family = {}
+
 function recursiveEnumerate(folder, file_consumer)
   local lfs = love.filesystem
   local filesTable = lfs.getDirectoryItems(folder)
@@ -15,7 +17,7 @@ function recursiveEnumerate(folder, file_consumer)
   end
 end
 
-function require_family()
+function family.requireAll()
   print("Require FAMILY")
   local files = recursiveEnumerate(string.sub(FAMILY:gsub("%.", "/"), 1, #FAMILY - 1), function(file)
     if string.find(file, "family.lua") then return end
@@ -26,3 +28,6 @@ function require_family()
   end)
 end
 
+function family.setR(resource_manager)
+  family.R = resource_manager
+end
