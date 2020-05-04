@@ -105,8 +105,9 @@ function Node()
     if id == search_id then return self end
 
     for _, child in ipairs(children) do
-      if child.getId() == search_id then
-        return child
+      local result = child.findById(search_id)
+      if result ~= nil then
+        return result
       end
     end
   end
