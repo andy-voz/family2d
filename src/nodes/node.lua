@@ -66,8 +66,8 @@ function Node()
   function self.load(data)
     id = data.id or id
 
-    if data.rect ~= nil then rect.set(data.rect.x, data.rect.y, data.rect.width, data.rect.height) end
-    if data.anchor ~= nil then anchor = Anchor(data.anchor.x, data.anchor.y) end
+    if data.rect ~= nil then self.setRect(data.rect.x, data.rect.y, data.rect.width, data.rect.height) end
+    if data.anchor ~= nil then self.setAnchor(data.anchor.x, data.anchor.y) end
 
     scale_x = data.scale_x or scale_x
     scale_y = data.scale_y or scale_y
