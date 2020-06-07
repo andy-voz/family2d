@@ -1,2 +1,2 @@
 # Family2d
-WORK IN PROGRESS.
+Project development is suspended indefinitely.
